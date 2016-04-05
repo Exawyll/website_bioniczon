@@ -1,0 +1,33 @@
+.header {
+    background-color: #3c3c3c;
+    color: #a6e1ec;
+    letter-spacing: 3px;
+    margin-top: 0px;
+    padding: 0.5em;
+}
+
+.header__nav {
+    background-color: #a6e1ec;
+    border-radius: 5px;
+    color: #3c3c3c;
+    display: inline-block;
+    font-family: Impact, 'KaushanScript-Regular', Arial, serif;
+    font-size: 1.5em;
+    font-weight: bold;
+    line-height: 2.0em;
+    overflow: hidden;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+.header__nav:hover {
+}
+
+nav a:hover {
+    background-color: #EF3340;
+    border-radius: 30px;
+    display: inline-block;
+    transform: scale(1.2);
+    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+}
