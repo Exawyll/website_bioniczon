@@ -1,42 +1,61 @@
 <?php
 
-class Model_Product
+
+function getProduct($idProduct)
 {
-    private $db;
+    $pdo = PDO2::getInstance();
 
-    /**
-     * Model_Produit constructor.
-     */
-    public function __construct()
-    {
-        $this->db = DB::getInstance();
-    }
+    $query = $pdo->prepare("SELECT * FROM product WHERE id = :id");
 
-    public function getProduct($idProduct)
-    {
-        $sqlQuery = "SELECT * FROM product WHERE id = :id";
-        $tab = array(
-            'id' => $idProduct
-        );
-        $result = $this->db->fetch($sqlQuery, $tab);
+    $query->bindValue(':id', $idProduct);
+    $query->execute();
+
+    if ($result = $query->fetch(PDO::FETCH_ASSOC)) {
+        $query->closeCursor();
         return $result;
     }
+    return false;
+}
 
-    public function getAllProducts()
-    {
-        $sqlQuery = "SELECT * FROM product;";
-        $result = $this->db->fetch($sqlQuery);
-        return $result;
-    }
+function getCategories()
+{
+    $pdo = PDO2::getInstance();
 
-    public function addProduct()
-    {
-        $sqlQuery = "INSERT INTO product(name,quantity)
-                              VALUES (:name,:quantity);";
-        $tab = array(
-            "name" => $_POST['name'],
-            "quantity" => $_POST['quantity']
-        );
-        $this->db->insert($sqlQuery, $tab);
+    $query = $pdo->prepare("SELECT * FROM category");
+    $query->execute();
+    $result = $query->fetchAll();
+    return $result;
+}
+
+
+function getAllProducts()
+{
+    $pdo = PDO2::getInstance();
+
+    $query = $pdo->prepare("SELECT * FROM product");
+    $result = $query->execute();
+
+    return $result;
+}
+
+function addProduct($product_name, $quantity, $category, $picture)
+{
+    $pdo = PDO2::getInstance();
+
+    $query = $pdo->prepare("INSERT INTO product SET
+              name = :name,
+              quantity = :quantity,
+              id_category = :id_category,
+              picture = :picture");
+
+    $query->bindValue(':name', $product_name);
+    $query->bindValue(':quantity', $quantity);
+    $query->bindValue(':id_category', $category);
+    $query->bindValue(':picture', $picture);
+
+    if ($query->execute()) {
+
+        return $pdo->lastInsertId();
     }
+    return $query->errorInfo();
 }

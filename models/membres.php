@@ -38,8 +38,8 @@ function combinaison_connexion_valide($nom_utilisateur, $mot_de_passe) {
     $requete = $pdo->prepare("SELECT id FROM membres
 		WHERE
 		nom_utilisateur = :nom_utilisateur AND
-		mot_de_passe = :mot_de_passe
-		AND hash_validation = ''");
+		mot_de_passe = :mot_de_passe");
+		/*AND hash_validation = ''*/
 
     $requete->bindValue(':nom_utilisateur', $nom_utilisateur);
     $requete->bindValue(':mot_de_passe', $mot_de_passe);
@@ -57,7 +57,7 @@ function lire_infos_utilisateur($id_utilisateur) {
 
     $pdo = PDO2::getInstance();
 
-    $requete = $pdo->prepare("SELECT nom_utilisateur, mot_de_passe, adresse_email, avatar, date_inscription, hash_validation
+    $requete = $pdo->prepare("SELECT nom_utilisateur, mot_de_passe, adresse_email, avatar, date_inscription
 		FROM membres
 		WHERE
 		id = :id_utilisateur");

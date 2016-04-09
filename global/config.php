@@ -1,7 +1,7 @@
 <?php
 
 // Identifiants pour la base de données. Nécessaires a PDO2.
-define('SQL_DSN', 'mysql:host=localhost;dbname=testMembre');
+define('SQL_DSN', 'mysql:host=localhost;dbname=ecommerce');
 define('SQL_USERNAME', 'root');
 define('SQL_PASSWORD', '');
 
@@ -11,6 +11,7 @@ define('PATH_VIEW',     'modules/'.$module.'/views/');
 define('PATH_MODEL',  'models/');
 define('PATH_LIB',     'libs/');
 define('DOSSIER_AVATAR', 'images/avatars/');
+define('PATH_GLOBAL_VIEW', 'global_views/');
 
 // Configurations relatives à l'avatar
 define('AVATAR_LARGEUR_MAXI', 100);

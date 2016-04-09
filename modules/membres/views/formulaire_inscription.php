@@ -1,7 +1,7 @@
-<h2>Inscription au site</h2>
+<h2>Register to BionicZon</h2>
 
 <?php
-
+/*
 if (!empty($erreurs_inscription)) {
 
     echo '<ul>' . "\n";
@@ -12,7 +12,7 @@ if (!empty($erreurs_inscription)) {
     }
 
     echo '</ul>';
-}
+}*/
 
 echo $form_inscription;
 

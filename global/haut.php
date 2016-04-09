@@ -7,9 +7,10 @@
     <meta charset="UTF-8"/>
 
     <title>BionicZon</title>
-    <link rel="stylesheet" href="style/bootstrap.css" type="text/css"/>
+
     <link rel="stylesheet" href="style/global.css" type="text/css"/>
     <link rel="stylesheet" href="style/header.css" type="text/css"/>
+    <link rel="stylesheet" href="style/bootstrap.css" type="text/css"/>
 
 
 </head>
@@ -27,8 +28,8 @@
                     <a href="">Head</a> |
                     <a href="">Chest</a> |
                     <a href="">Legs</a> |
-                    <a href="">Sign In</a> |
-                    <a href="">Sign Up</a> |
+                    <a href="index.php?module=membres&amp;action=connexion">Sign In</a> |
+                    <a href="index.php?module=membres&amp;action=inscription">Sign Up</a> |
                     <a href="">My cart</a>
                 </nav>
             </div>
@@ -41,3 +42,5 @@
 <?php include 'global/menu.php'; ?>
 
 <div id="centre">
+
+

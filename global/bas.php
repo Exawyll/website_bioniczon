@@ -1,7 +1,7 @@
 </div>
 
 <div id="bas">
-    Site réalisé par Wylliam Delaunay
+    Website by Wylliam Delaunay
 </div>
 
 </body>
