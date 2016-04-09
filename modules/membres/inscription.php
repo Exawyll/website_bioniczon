@@ -12,20 +12,26 @@ if (utilisateur_est_connecte()) {
     require_once PATH_LIB . 'form.php';
 
     // "formulaire_inscription" est l'ID unique du formulaire
-    $form_inscription = new Form('formulaire_inscription');
+    $form_inscription = new Form('register_form');
 
     $form_inscription->method('POST');
 
-    $form_inscription->add('Text', 'nom_utilisateur')
-        ->label("User name");
+    $form_inscription->add('Text', 'firstname')
+        ->label("Firstname");
 
-    $form_inscription->add('Password', 'pass')
+    $form_inscription->add('Text', 'lastname')
+        ->label("Lastname");
+
+    $form_inscription->add('Text', 'login')
+        ->label("login");
+
+    $form_inscription->add('Password', 'password')
         ->label("Password");
 
     $form_inscription->add('Password', 'pass_check')
         ->label("Password (check)");
 
-    $form_inscription->add('Email', 'adresse_email')
+    $form_inscription->add('Email', 'email')
         ->label("Email address");
 
     $form_inscription->add('File', 'avatar')
@@ -47,23 +53,20 @@ if (utilisateur_est_connecte()) {
     if ($form_inscription->is_valid($_POST)) {
 
         // On vérifie si les 2 mots de passe correspondent
-        if ($_POST['pass'] != $_POST['pass_check']) {
+        if ($_POST['password'] != $_POST['pass_check']) {
 
             echo "The two passwords are not the same !" . "<br>";
         }
 
-        // Tire de la documentation PHP sur <http://fr.php.net/uniqid>
-        $hash_validation = md5(uniqid(rand(), true));
-
         // Tentative d'ajout du membre dans la base de donnees
-        list($nom_utilisateur, $mot_de_passe, $adresse_email, $avatar) =
-            $form_inscription->get_cleaned_data('nom_utilisateur', 'pass', 'adresse_email', 'avatar');
+        list($firstname, $lastname, $login, $password, $email, $avatar) =
+            $form_inscription->get_cleaned_data('firstname', 'lastname', 'login', 'password', 'email', 'avatar');
 
         // On veut utiliser le modele de l'inscription (~/models/inscription.php)
         require_once PATH_MODEL . 'inscription.php';
 
         // ajouter_membre_dans_bdd() est défini dans ~/models/inscription.php
-        $id_utilisateur = ajouter_membre_dans_bdd($nom_utilisateur, sha1($mot_de_passe), $adresse_email, $hash_validation);
+        $id_utilisateur = ajouter_membre_dans_bdd($firstname, $lastname, $login, sha1($password), $email);
 
         // Si la base de données a bien voulu ajouter l'utilisateur (pas de doublons)
         if (ctype_digit($id_utilisateur)) {
@@ -120,15 +123,18 @@ if (utilisateur_est_connecte()) {
             echo $id_utilisateur[2];
         }
     } else {
-        if (empty($_POST['nom_utilisateur'])) {
-            echo "* Need to fill user name" . "<br>";
+        if (!empty($_POST)) {
+            if (empty($_POST['login'])) {
+                echo "* Need to fill login" . "<br>";
+            }
+            if (empty($_POST['password']) || empty($_POST['pass_check'])) {
+                echo "* Need to fill passwords" . "<br>";
+            }
+            if (empty($_POST['email'])) {
+                echo "* Need to fill email address" . "<br>";
+            }
         }
-        if (empty($_POST['pass']) || empty($_POST['pass_check'])) {
-            echo "* Need to fill passwords" . "<br>";
-        }
-        if (empty($_POST['adresse_email'])) {
-            echo "* Need to fill email address" . "<br>";
-        }
+
     }
 
     // On reaffiche le formulaire d'inscription

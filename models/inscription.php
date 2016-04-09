@@ -1,20 +1,22 @@
 <?php
 
-function ajouter_membre_dans_bdd($nom_utilisateur, $mdp, $adresse_email, $hash_validation) {
+function ajouter_membre_dans_bdd($firstname, $lastname, $login, $mdp, $email) {
 
     $pdo = PDO2::getInstance();
 
-    $requete = $pdo->prepare("INSERT INTO membres SET
-		nom_utilisateur = :nom_utilisateur,
-		mot_de_passe = :mot_de_passe,
-		adresse_email = :adresse_email,
-		hash_validation = :hash_validation,
-		date_inscription = NOW()");
+    $requete = $pdo->prepare("INSERT INTO user SET
+		firstname = :firstname,
+		lastname = :lastname,
+		login = :login,
+		password = :password,
+		email = :email,
+		registerDate = NOW()");
 
-    $requete->bindValue(':nom_utilisateur', $nom_utilisateur);
-    $requete->bindValue(':mot_de_passe',    $mdp);
-    $requete->bindValue(':adresse_email',   $adresse_email);
-    $requete->bindValue(':hash_validation', $hash_validation);
+    $requete->bindValue(':firstname', $firstname);
+    $requete->bindValue(':lastname', $lastname);
+    $requete->bindValue(':login', $login);
+    $requete->bindValue(':password', $mdp);
+    $requete->bindValue(':email', $email);
 
     if ($requete->execute()) {
 

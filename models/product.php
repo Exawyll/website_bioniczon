@@ -27,14 +27,13 @@ function getCategories()
     return $result;
 }
 
-
 function getAllProducts()
 {
     $pdo = PDO2::getInstance();
 
     $query = $pdo->prepare("SELECT * FROM product");
-    $result = $query->execute();
-
+    $query->execute();
+    $result = $query->fetchAll();
     return $result;
 }
 

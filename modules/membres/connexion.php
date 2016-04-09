@@ -11,18 +11,18 @@ if (utilisateur_est_connecte()) {
     require_once PATH_LIB . 'form.php';
 
     // "formulaire_connexion" est l'ID unique du formulaire
-    $form_connexion = new Form('formulaire_connexion');
+    $form_connexion = new Form('connexion_form');
 
     $form_connexion->method('POST');
 
-    $form_connexion->add('Text', 'nom_utilisateur')
-        ->label("Votre nom d'utilisateur");
+    $form_connexion->add('Text', 'login')
+        ->label("Login");
 
-    $form_connexion->add('Password', 'mot_de_passe')
-        ->label("Votre mot de passe");
+    $form_connexion->add('Password', 'password')
+        ->label("Password");
 
     $form_connexion->add('Submit', 'submit')
-        ->value("Connectez-moi !");
+        ->value("Sign In !");
 
     // Pré-remplissage avec les valeurs précédemment entrées (s'il y en a)
     $form_connexion->bound($_POST);
@@ -33,14 +33,14 @@ if (utilisateur_est_connecte()) {
     // Validation des champs suivant les règles
     if ($form_connexion->is_valid($_POST)) {
 
-        list($nom_utilisateur, $mot_de_passe) =
-            $form_connexion->get_cleaned_data('nom_utilisateur', 'mot_de_passe');
+        list($login, $password) =
+            $form_connexion->get_cleaned_data('login', 'password');
 
         // On veut utiliser le modèle des membres (~/models/membres.php)
         require_once PATH_MODEL . 'membres.php';
 
         // combinaison_connexion_valide() est définit dans ~/models/membres.php
-        $id_utilisateur = combinaison_connexion_valide($nom_utilisateur, sha1($mot_de_passe));
+        $id_utilisateur = combinaison_connexion_valide($login, sha1($password));
 
         // Si les identifiants sont valides
         if (false !== $id_utilisateur) {
@@ -49,7 +49,7 @@ if (utilisateur_est_connecte()) {
 
             // On enregistre les informations dans la session
             $_SESSION['id'] = $id_utilisateur;
-            $_SESSION['pseudo'] = $nom_utilisateur;
+            $_SESSION['pseudo'] = $login;
             $_SESSION['avatar'] = $infos_utilisateur['avatar'];
             $_SESSION['email'] = $infos_utilisateur['adresse_email'];
 
@@ -70,7 +70,7 @@ if (utilisateur_est_connecte()) {
 
         } else {
 
-            $erreurs_connexion[] = "Couple nom d'utilisateur / mot de passe inexistant.";
+            $erreurs_connexion[] = "login / password not found.";
 
             // On réaffiche le formulaire de connexion
             require_once PATH_VIEW . 'formulaire_connexion.php';

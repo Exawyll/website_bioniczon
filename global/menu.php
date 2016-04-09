@@ -5,6 +5,7 @@
     <ul>
         <li><a href="index.php">Accueil</a></li>
         <li><a href="index.php?module=product&amp;action=add_product">Add products</a></li>
+        <li><a href="index.php?module=product&amp;action=see_product">See products</a></li>
     </ul>
 
     <h3>Espace membre</h3>

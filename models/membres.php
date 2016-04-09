@@ -31,18 +31,17 @@ function valider_compte_avec_hash($hash_validation) {
     return ($requete->rowCount() == 1);
 }
 
-function combinaison_connexion_valide($nom_utilisateur, $mot_de_passe) {
+function combinaison_connexion_valide($login, $password) {
 
     $pdo = PDO2::getInstance();
 
-    $requete = $pdo->prepare("SELECT id FROM membres
+    $requete = $pdo->prepare("SELECT id FROM user
 		WHERE
-		nom_utilisateur = :nom_utilisateur AND
-		mot_de_passe = :mot_de_passe");
-		/*AND hash_validation = ''*/
+		login = :login AND
+		password = :password");
 
-    $requete->bindValue(':nom_utilisateur', $nom_utilisateur);
-    $requete->bindValue(':mot_de_passe', $mot_de_passe);
+    $requete->bindValue(':login', $login);
+    $requete->bindValue(':password', $password);
     $requete->execute();
 
     if ($result = $requete->fetch(PDO::FETCH_ASSOC)) {

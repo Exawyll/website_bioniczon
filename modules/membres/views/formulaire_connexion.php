@@ -1,6 +1,6 @@
-<h2>Connexion au site</h2>
+<h2>Signing In</h2>
 
-<p>Si vous n'êtes pas encore inscrit, vous pouvez le faire en <a href="index.php?module=membres&amp;action=inscription">cliquant sur ce lien</a>.</p>
+<p>If you are not registered, please do it <a href="index.php?module=membres&amp;action=inscription">here</a>.</p>
 
 <?php
 
