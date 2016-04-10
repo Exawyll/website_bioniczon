@@ -1,5 +1,4 @@
 <div id="menu">
-
     <h2>Menu</h2>
 
     <ul>
@@ -22,3 +21,7 @@
         </ul>
     <?php } ?>
 </div>
+
+
+
+

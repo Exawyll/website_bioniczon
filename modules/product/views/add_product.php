@@ -21,6 +21,11 @@
         <label for="InputFile">Product picture</label>
         <input type="file" id="InputFile" name="picture">
     </div>
+    <div class="form-group">
+        <label for="Text">Product description</label>
+        <textarea class="form-control" id="exampleTextarea" rows="3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim laborum maxime molestiae qui voluptatem. Aliquid fugiat in ipsam repudiandae. Autem cum delectus, dolor dolorem eaque incidunt magnam quae reiciendis repudiandae?</textarea>
+    </div>
 
     <button type="submit" class="btn">Submit</button>
 </form>
+

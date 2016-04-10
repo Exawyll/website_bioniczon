@@ -1,7 +1,7 @@
-</div>
+</main>
 
 <div id="bas">
-    Website by Wylliam Delaunay
+    Website created by Wylliam Delaunay
 </div>
 
 </body>

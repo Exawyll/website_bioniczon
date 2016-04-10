@@ -1,16 +1,32 @@
 <?php
 
 
-function getProduct($idProduct)
+function getProductByCategory($idCategory)
 {
     $pdo = PDO2::getInstance();
 
-    $query = $pdo->prepare("SELECT * FROM product WHERE id = :id");
+    $query = $pdo->prepare("SELECT * FROM product WHERE id_category = :id_category");
 
-    $query->bindValue(':id', $idProduct);
+    $query->bindValue(':id_category', $idCategory);
     $query->execute();
 
-    if ($result = $query->fetch(PDO::FETCH_ASSOC)) {
+    if ($result = $query->fetchAll()) {
+        $query->closeCursor();
+        return $result;
+    }
+    return false;
+}
+
+function getProductById($idProduct)
+{
+    $pdo = PDO2::getInstance();
+
+    $query = $pdo->prepare("SELECT * FROM product WHERE id = :id_product");
+
+    $query->bindValue(':id_product', $idProduct);
+    $query->execute();
+
+    if ($result = $query->fetch()) {
         $query->closeCursor();
         return $result;
     }
@@ -37,7 +53,7 @@ function getAllProducts()
     return $result;
 }
 
-function addProduct($product_name, $quantity, $category, $picture)
+function addProduct($product_name, $quantity, $category, $picture, $description)
 {
     $pdo = PDO2::getInstance();
 
@@ -45,12 +61,14 @@ function addProduct($product_name, $quantity, $category, $picture)
               name = :name,
               quantity = :quantity,
               id_category = :id_category,
-              picture = :picture");
+              picture = :picture,
+              description = :description");
 
     $query->bindValue(':name', $product_name);
     $query->bindValue(':quantity', $quantity);
     $query->bindValue(':id_category', $category);
     $query->bindValue(':picture', $picture);
+    $query->bindValue(':description', $description);
 
     if ($query->execute()) {
 

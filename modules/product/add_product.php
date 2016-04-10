@@ -9,7 +9,13 @@ $cat = getCategories();
 //Load the form to add product
 require_once PATH_VIEW . 'add_product.php';
 
-if (!empty($_POST['product_name']) && !empty($_POST['quantity']) && !empty($_POST['category']) && !empty($_POST['picture'])) {
+//Get all the current products
+$allProducts = getAllProducts();
+
+//List them
+require_once PATH_VIEW . 'list_products.php';
+
+if (!empty($_POST['product_name']) && !empty($_POST['quantity']) && !empty($_POST['category']) && !empty($_POST['picture']) && !empty($_POST['description'])) {
 
     $tabErrors = array();
 
@@ -28,6 +34,9 @@ if (!empty($_POST['product_name']) && !empty($_POST['quantity']) && !empty($_POS
         if (empty($_POST['picture'])) {
             $tabErrors[] = "picture";
         }
+        if (empty($_POST['description'])) {
+            $tabErrors[] = "description";
+        }
     }
 
     //Secure the variables
@@ -35,17 +44,15 @@ if (!empty($_POST['product_name']) && !empty($_POST['quantity']) && !empty($_POS
     $quantity = htmlspecialchars($_POST['quantity']);
     $category = intval($_POST['category'][0]);
     $picture = htmlspecialchars($_POST['picture']);
+    $description = htmlspecialchars($_POST['description']);
 
     if (empty($tabErrors)) {
 
         //Insertion in the database
-        $newProduct = addProduct($name, $quantity, $category, $picture);
+        $newProduct = addProduct($name, $quantity, $category, $picture, $description);
 
         //If the database has added the new product
         if (ctype_digit($newProduct)) {
-
-            //Get all the current products
-            $allProducts = getAllProducts();
 
             //List them
             require_once PATH_VIEW . 'list_products.php';
