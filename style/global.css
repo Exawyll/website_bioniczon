@@ -61,4 +61,20 @@ table {
     width: 80%;
 }
 
+.accueil {
+    margin-top: 20px;
+}
+
+.accueil--header {
+    margin-left: -40px;
+}
+
+.accueil__first {
+    border: 1px solid #3c3c3c;
+    height: 350px;
+}
+
+.accueil__second {
+    margin-left: 40px;
+}
 

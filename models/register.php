@@ -1,6 +1,6 @@
 <?php
 
-function ajouter_membre_dans_bdd($firstname, $lastname, $login, $mdp, $email) {
+function addUserInDB($firstname, $lastname, $login, $mdp, $email) {
 
     $pdo = PDO2::getInstance();
 

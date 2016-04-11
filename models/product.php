@@ -53,7 +53,7 @@ function getAllProducts()
     return $result;
 }
 
-function addProduct($product_name, $quantity, $category, $picture, $description)
+function addProduct($productName, $quantity, $category, $picture, $description)
 {
     $pdo = PDO2::getInstance();
 
@@ -64,7 +64,7 @@ function addProduct($product_name, $quantity, $category, $picture, $description)
               picture = :picture,
               description = :description");
 
-    $query->bindValue(':name', $product_name);
+    $query->bindValue(':name', $productName);
     $query->bindValue(':quantity', $quantity);
     $query->bindValue(':id_category', $category);
     $query->bindValue(':picture', $picture);

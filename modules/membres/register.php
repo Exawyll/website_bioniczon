@@ -1,10 +1,10 @@
 <?php
 
 //Vérification des droits d'accès de la page
-if (utilisateur_est_connecte()) {
+if (userSignedIn()) {
 
 // On affiche la page d'erreur comme quoi l'utilisateur est déjà connecté
-    include PATH_GLOBAL_VIEW . 'erreur_deja_connecte.php';
+    include PATH_GLOBAL_VIEW . 'error_already_connected.php';
 
 } else {
 
@@ -12,45 +12,45 @@ if (utilisateur_est_connecte()) {
     require_once PATH_LIB . 'form.php';
 
     // "formulaire_inscription" est l'ID unique du formulaire
-    $form_inscription = new Form('register_form');
+    $formSignUp = new Form('register_form');
 
-    $form_inscription->method('POST');
+    $formSignUp->method('POST');
 
-    $form_inscription->add('Text', 'firstname')
+    $formSignUp->add('Text', 'firstname')
         ->label("Firstname");
 
-    $form_inscription->add('Text', 'lastname')
+    $formSignUp->add('Text', 'lastname')
         ->label("Lastname");
 
-    $form_inscription->add('Text', 'login')
+    $formSignUp->add('Text', 'login')
         ->label("login");
 
-    $form_inscription->add('Password', 'password')
+    $formSignUp->add('Password', 'password')
         ->label("Password");
 
-    $form_inscription->add('Password', 'pass_check')
+    $formSignUp->add('Password', 'pass_check')
         ->label("Password (check)");
 
-    $form_inscription->add('Email', 'email')
+    $formSignUp->add('Email', 'email')
         ->label("Email address");
 
-    $form_inscription->add('File', 'avatar')
+    $formSignUp->add('File', 'avatar')
         ->filter_extensions('jpg', 'png', 'gif')
         ->max_size(8192)// 8 Kb
         ->label("Your avatar (optional)")
         ->Required(false);
 
-    $form_inscription->add('Submit', 'submit')
+    $formSignUp->add('Submit', 'submit')
         ->value("Register");
 
     // Pré-remplissage avec les valeurs précédemment entrées (s'il y en a)
-    $form_inscription->bound($_POST);
+    $formSignUp->bound($_POST);
 
     // Affichage du formulaire
-    require_once PATH_VIEW . 'formulaire_inscription.php';
+    require_once PATH_VIEW . 'form_signup.php';
 
     // Validation des champs suivant les règles en utilisant les données du tableau $_POST
-    if ($form_inscription->is_valid($_POST)) {
+    if ($formSignUp->is_valid($_POST)) {
 
         // On vérifie si les 2 mots de passe correspondent
         if ($_POST['password'] != $_POST['pass_check']) {
@@ -60,16 +60,16 @@ if (utilisateur_est_connecte()) {
 
         // Tentative d'ajout du membre dans la base de donnees
         list($firstname, $lastname, $login, $password, $email, $avatar) =
-            $form_inscription->get_cleaned_data('firstname', 'lastname', 'login', 'password', 'email', 'avatar');
+            $formSignUp->get_cleaned_data('firstname', 'lastname', 'login', 'password', 'email', 'avatar');
 
-        // On veut utiliser le modele de l'inscription (~/models/inscription.php)
-        require_once PATH_MODEL . 'inscription.php';
+        // On veut utiliser le modele de l'inscription (~/models/register.php)
+        require_once PATH_MODEL . 'register.php';
 
-        // ajouter_membre_dans_bdd() est défini dans ~/models/inscription.php
-        $id_utilisateur = ajouter_membre_dans_bdd($firstname, $lastname, $login, sha1($password), $email);
+        // ajouter_membre_dans_bdd() est défini dans ~/models/register.php
+        $idUser = addUserInDB($firstname, $lastname, $login, sha1($password), $email);
 
         // Si la base de données a bien voulu ajouter l'utilisateur (pas de doublons)
-        if (ctype_digit($id_utilisateur)) {
+        if (ctype_digit($idUser)) {
 
             // Redimensionnement et sauvegarde de l'avatar (eventuel) dans le bon dossier
             if (!empty($avatar)) {
@@ -80,7 +80,7 @@ if (utilisateur_est_connecte()) {
                 // Redimensionnement et sauvegarde de l'avatar
                 $avatar = new Image($avatar);
                 $avatar->resize_to(AVATAR_LARGEUR_MAXI, AVATAR_HAUTEUR_MAXI); // Image->resize_to($largeur_maxi, $hauteur_maxi)
-                $avatar_filename = DOSSIER_AVATAR . $id_utilisateur . '.' . strtolower(pathinfo($avatar->get_filename(), PATHINFO_EXTENSION));
+                $avatar_filename = DOSSIER_AVATAR . $idUser . '.' . strtolower(pathinfo($avatar->get_filename(), PATHINFO_EXTENSION));
                 $avatar->save_as($avatar_filename);
 
                 // On veut utiliser le modele des membres (~/models/membres.php)
@@ -88,12 +88,11 @@ if (utilisateur_est_connecte()) {
 
                 // Mise à jour de l'avatar dans la table
                 // maj_avatar_membre() est défini dans ~/models/membres.php
-                maj_avatar_membre($id_utilisateur, $avatar_filename);
-
+                updateUserAvatar($idUser, $avatar_filename);
             }
 
             // Affichage de la confirmation de l'inscription
-            require_once PATH_VIEW . 'inscription_effectuee.php';
+            require_once PATH_VIEW . 'register_done.php';
 
             /*// On vérifie qu'un hash est présent
             if (!empty($_GET['hash'])) {
@@ -106,21 +105,21 @@ if (utilisateur_est_connecte()) {
                 if (valider_compte_avec_hash($_GET['hash'])) {
 
                 // Affichage de la confirmation de validation du compte
-                require_once PATH_VIEW . 'compte_valide.php';
+                require_once PATH_VIEW . 'account_validate.php';
 
             } else {
 
                 // Affichage de l'erreur de validation du compte
-                require_once PATH_VIEW . 'erreur_activation_compte.php';
+                require_once PATH_VIEW . 'error_activation.php';
             }*/
 
         } else {
 
             // On affiche à nouveau le formulaire d'inscription
-            require_once PATH_VIEW . 'formulaire_inscription.php';
+            require_once PATH_VIEW . 'form_signup.php';
 
             //On affiche l'erreur renvoyé par PDO::errorinfo()
-            echo $id_utilisateur[2];
+            echo $idUser[2];
         }
     } else {
         if (!empty($_POST)) {
@@ -138,5 +137,5 @@ if (utilisateur_est_connecte()) {
     }
 
     // On reaffiche le formulaire d'inscription
-    require_once PATH_VIEW . 'formulaire_inscription.php';
+    require_once PATH_VIEW . 'form_signup.php';
 }

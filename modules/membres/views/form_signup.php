@@ -14,5 +14,5 @@ if (!empty($erreurs_inscription)) {
     echo '</ul>';
 }*/
 
-echo $form_inscription;
+echo $formSignUp;
 

@@ -1,72 +1,72 @@
 <?php
 
-function maj_avatar_membre($id_utilisateur , $avatar) {
+function updateUserAvatar($idUser , $avatar) {
 
     $pdo = PDO2::getInstance();
 
-    $requete = $pdo->prepare("UPDATE membres SET
+    $query = $pdo->prepare("UPDATE user SET
 		avatar = :avatar
 		WHERE
-		id = :id_utilisateur");
+		id = :id");
 
-    $requete->bindValue(':id_utilisateur', $id_utilisateur);
-    $requete->bindValue(':avatar',         $avatar);
+    $query->bindValue(':id', $idUser);
+    $query->bindValue(':avatar', $avatar);
 
-    return $requete->execute();
+    return $query->execute();
 }
 
-function valider_compte_avec_hash($hash_validation) {
+/*function validateAccountFromHash($validateHash) {
 
     $pdo = PDO2::getInstance();
 
-    $requete = $pdo->prepare("UPDATE membres SET
-		hash_validation = ''
+    $query = $pdo->prepare("UPDATE user SET
+		validateHash = ''
 		WHERE
-		hash_validation = :hash_validation");
+		validateHash = :validateHash");
 
-    $requete->bindValue(':hash_validation', $hash_validation);
+    $query->bindValue(':validateHash', $validateHash);
 
-    $requete->execute();
+    $query->execute();
 
-    return ($requete->rowCount() == 1);
-}
+    return ($query->rowCount() == 1);
+}*/
 
-function combinaison_connexion_valide($login, $password) {
+function validateSignIn($login, $password) {
 
     $pdo = PDO2::getInstance();
 
-    $requete = $pdo->prepare("SELECT id FROM user
+    $query = $pdo->prepare("SELECT id FROM user
 		WHERE
 		login = :login AND
 		password = :password");
 
-    $requete->bindValue(':login', $login);
-    $requete->bindValue(':password', $password);
-    $requete->execute();
+    $query->bindValue(':login', $login);
+    $query->bindValue(':password', $password);
+    $query->execute();
 
-    if ($result = $requete->fetch(PDO::FETCH_ASSOC)) {
+    if ($result = $query->fetch(PDO::FETCH_ASSOC)) {
 
-        $requete->closeCursor();
+        $query->closeCursor();
         return $result['id'];
     }
     return false;
 }
 
-function lire_infos_utilisateur($id_utilisateur) {
+function infoUser($idUser) {
 
     $pdo = PDO2::getInstance();
 
-    $requete = $pdo->prepare("SELECT nom_utilisateur, mot_de_passe, adresse_email, avatar, date_inscription
-		FROM membres
+    $query = $pdo->prepare("SELECT firstname, lastname, login, password, email, avatar, registerDate, admin
+		FROM user
 		WHERE
-		id = :id_utilisateur");
+		id = :id");
 
-    $requete->bindValue(':id_utilisateur', $id_utilisateur);
-    $requete->execute();
+    $query->bindValue(':id', $idUser);
+    $query->execute();
 
-    if ($result = $requete->fetch(PDO::FETCH_ASSOC)) {
+    if ($result = $query->fetch(PDO::FETCH_ASSOC)) {
 
-        $requete->closeCursor();
+        $query->closeCursor();
         return $result;
     }
     return false;

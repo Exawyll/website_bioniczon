@@ -1,10 +1,10 @@
 <?php
 
 // Vérification des droits d'accès de la page
-if (!utilisateur_est_connecte()) {
+if (!userSignedIn()) {
 
     // On affiche la page d'erreur comme quoi l'utilisateur doit être connecté pour voir la page
-    include PATH_GLOBAL_VIEW . 'erreur_non_connecte.php';
+    include PATH_GLOBAL_VIEW . 'error_not_connected.php';
 
 } else {
 
@@ -16,7 +16,7 @@ if (!utilisateur_est_connecte()) {
     setcookie('id', '');
     setcookie('connexion_auto', '');
 
-    include PATH_VIEW . 'deconnexion_ok.php';
+    include PATH_VIEW . 'disconnection_ok.php';
 
 }
 /**

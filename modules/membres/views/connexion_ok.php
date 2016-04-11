@@ -1,4 +1,4 @@
-<h2>Confirmation de connexion</h2>
+<h2>Signing in confirmed</h2>
 
-<p>Bienvenue, <?php echo $_SESSION['pseudo']; ?>.<br />
-    Vous êtes maintenant connecté !</p>
+<p>Welcome, <?php echo $_SESSION['login']; ?>.<br />
+    You are now signed in !</p>

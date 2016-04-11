@@ -1,57 +1,60 @@
 <?php
 
 //Vérification des droits d'accès de la page
-if (utilisateur_est_connecte()) {
+if (userSignedIn()) {
 
 // On affiche la page d'erreur comme quoi l'utilisateur est déjà connecté
-    include PATH_GLOBAL_VIEW . 'erreur_deja_connecte.php';
+    include PATH_GLOBAL_VIEW . 'error_already_connected.php';
 
 } else {
     // Ne pas oublier d'inclure la librairie Form
     require_once PATH_LIB . 'form.php';
 
     // "formulaire_connexion" est l'ID unique du formulaire
-    $form_connexion = new Form('connexion_form');
+    $form_signIn = new Form('connexion_form');
 
-    $form_connexion->method('POST');
+    $form_signIn->method('POST');
 
-    $form_connexion->add('Text', 'login')
+    $form_signIn->add('Text', 'login')
         ->label("Login");
 
-    $form_connexion->add('Password', 'password')
+    $form_signIn->add('Password', 'password')
         ->label("Password");
 
-    $form_connexion->add('Submit', 'submit')
+    $form_signIn->add('Submit', 'submit')
         ->value("Sign In !");
 
     // Pré-remplissage avec les valeurs précédemment entrées (s'il y en a)
-    $form_connexion->bound($_POST);
+    $form_signIn->bound($_POST);
 
     // Création d'un tableau des erreurs
     $erreurs_connexion = array();
 
     // Validation des champs suivant les règles
-    if ($form_connexion->is_valid($_POST)) {
+    if ($form_signIn->is_valid($_POST)) {
 
         list($login, $password) =
-            $form_connexion->get_cleaned_data('login', 'password');
+            $form_signIn->get_cleaned_data('login', 'password');
 
         // On veut utiliser le modèle des membres (~/models/membres.php)
         require_once PATH_MODEL . 'membres.php';
 
         // combinaison_connexion_valide() est définit dans ~/models/membres.php
-        $id_utilisateur = combinaison_connexion_valide($login, sha1($password));
+        $idUser = validateSignIn($login, sha1($password));
 
         // Si les identifiants sont valides
-        if (false !== $id_utilisateur) {
+        if (false !== $idUser) {
 
-            $infos_utilisateur = lire_infos_utilisateur($id_utilisateur);
+            $userInfo = infoUser($idUser);
 
             // On enregistre les informations dans la session
-            $_SESSION['id'] = $id_utilisateur;
-            $_SESSION['pseudo'] = $login;
-            $_SESSION['avatar'] = $infos_utilisateur['avatar'];
-            $_SESSION['email'] = $infos_utilisateur['adresse_email'];
+            $_SESSION['id'] = $idUser;
+            $_SESSION['login'] = $userInfo['login'];
+            $_SESSION['firstname'] = $userInfo['firstname'];
+            $_SESSION['lastname'] = $userInfo['lastname'];
+            $_SESSION['avatar'] = $userInfo['avatar'];
+            $_SESSION['email'] = $userInfo['email'];
+            $_SESSION['admin'] = $userInfo['admin'];
 
             // Affichage de la confirmation de la connexion
             require_once PATH_VIEW . 'connexion_ok.php';
@@ -70,15 +73,15 @@ if (utilisateur_est_connecte()) {
 
         } else {
 
-            $erreurs_connexion[] = "login / password not found.";
+            $erreurs_connexion[] = "login or password not found.";
 
             // On réaffiche le formulaire de connexion
-            require_once PATH_VIEW . 'formulaire_connexion.php';
+            require_once PATH_VIEW . 'form_signin.php';
         }
 
     } else {
 
         // On réaffiche le formulaire de connexion
-        require_once PATH_VIEW . 'formulaire_connexion.php';
+        require_once PATH_VIEW . 'form_signin.php';
     }
 }

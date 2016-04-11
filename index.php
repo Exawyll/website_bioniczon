@@ -22,22 +22,22 @@ if (!empty($_GET['module'])) {
         // Sinon, on affiche la page d'accueil !
     } else {
 
-        require_once 'global/accueil.php';
+        require_once 'global/home.php';
     }
 
 // Module non specifié ou invalide ? On affiche la page d'accueil !
 } else {
 
-    require_once 'global/accueil.php';
+    require_once 'global/home.php';
 }
 
 // Fin de la tamporisation de sortie
 $contenu = ob_get_clean();
 
 // Début du code HTML
-require_once 'global/haut.php';
+require_once 'global/header.php';
 
 echo $contenu;
 
 // Fin du code HTML
-require_once 'global/bas.php';
+require_once 'global/footer.php';

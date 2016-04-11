@@ -14,7 +14,7 @@
     background-color: #a6e1ec;
     border-radius: 5px;
     color: #3c3c3c;
-    display: inline-block;
+    display: inline;
     font-family: Impact, 'KaushanScript-Regular', Arial, serif;
     font-size: 1.5em;
     font-weight: bold;
@@ -26,6 +26,10 @@
 }
 
 .header__nav:hover {
+}
+
+.header__nav--link {
+    display: inline;
 }
 
 nav a:hover {
