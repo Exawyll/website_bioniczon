@@ -18,9 +18,10 @@
         </ul>
     <?php } else { ?>
         <p>
-            Welcome, <?php echo htmlspecialchars($_SESSION['login']) . " " . htmlspecialchars($_SESSION['lastname']); ?>
+            Welcome, <?php echo htmlspecialchars($_SESSION['firstname']) . " " . htmlspecialchars($_SESSION['lastname']); ?>
         </p>
         <ul>
+            <li><a href="index.php?module=membres&amp;action=profile&amp;id="<?php echo $_SESSION['id']; ?>>Your profile</a></li>
             <li><a href="index.php?module=membres&amp;action=disconnection">Disconnect</a></li>
         </ul>
     <?php } ?>

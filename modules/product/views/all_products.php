@@ -2,23 +2,27 @@
 
     <h2 class="products__title">Articles</h2>
 
-    <?php foreach ($allProducts as $product) {
-        echo '<a href="index.php?module=product&amp;action=see_product&amp;id_product=' . $product[0] . '">';
-        echo '<div class="col-xs-12 col-sm-6 col-md-4" >';
-        echo '<div class="product" >';
+    <div class="row">
 
-        echo '<div class="product__transform" >';
-        echo '<img src = "' . 'images/' . $product[4] . '" alt = "product" width = "100%" >';
-        echo '</div >';
+        <?php foreach ($allProducts as $product) {
+            echo '<a href="index.php?module=product&amp;action=see_product&amp;id_product=' . $product[0] . '">';
+            echo '<div class="col-md-4 col-sm-6 col-xs-12  " >';
+            echo '<div class="product" >';
 
-        echo '<h3 class="product__title" >' . $product[1] . '</h3 >';
+            echo '<div class="product__transform" >';
+            echo '<img src = "' . 'images/' . $product[4] . '" alt = "product" width = "100%" >';
+            echo '</div >';
 
-        echo '<h2>' . $product[6] . ' $</h2>';
+            echo '<h3 class="product__title" >' . $product[1] . '</h3 >';
 
-        echo '<p class="product__description" >Lorem ipsum dolor sit amet, consectetur .</p >';
+            echo '<h2>' . $product[6] . ' $</h2>';
 
-        echo '</div >';
-        echo '</div >';
-    } ?>
-    </a>
+            echo '<p class="product__description" >Lorem ipsum dolor sit amet, consectetur .</p >';
+
+            echo '</div >';
+            echo '</div >';
+        } ?>
+        </a>
+
+    </div>
 </div>

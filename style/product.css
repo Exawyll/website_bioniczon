@@ -5,7 +5,7 @@
 
 .product {
     height: 400px;
-    margin: 20px 0px;
+    margin-left: -40px;
     position: relative;
     text-align: center;
     transition: background-color 1.5s ease-in-out, color 1.5s ease-in-out;
@@ -17,9 +17,9 @@
 }
 
 .product__transform {
-    background-size: 100%;
+    background-position: center;
+    background-size: contain;
     height: 300px;
-    margin-inside: 20px;
     overflow: hidden;
     padding: 20px 20px;
     position: relative;
