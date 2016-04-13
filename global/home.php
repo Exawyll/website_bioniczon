@@ -11,8 +11,12 @@
 <div class="container-fluid accueil">
     <div class="row">
         <div class="col-lg-3 col-md-3 col-xs-12 accueil__first">
+            <?php if (userSignedIn()) { ?>
+            <p>You already signed in so you have access to all our product. Make sure you have all the information you need otherwise feel free to contact us</p>
+            <?php } else { ?>
             <p>If you are not registred, please do it here :</p>
-            <a href="index.php?module=membres&amp;action=inscription"><button>Click here to register</button></a>
+            <a href="index.php?module=membres&amp;action=register"><button>Click here to register</button></a>
+            <?php } ?>
         </div>
 
         <div class="col-lg-6 col-lg-push-1 col-md-3 col-xs-12 accueil__second">

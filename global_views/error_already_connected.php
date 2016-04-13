@@ -1,3 +1,3 @@
-<h2>Accès interdit !</h2>
+<h2>Forbidden Access !</h2>
 
-<p>Inutile d'accéder à cette page si vous êtes connecté.</p>
+<p>No use to register, you already signed in.</p>

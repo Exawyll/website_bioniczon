@@ -47,7 +47,7 @@
                                     <?php } else { ?>
                                         <a href="index.php?module=membres&amp;action=sign_in">Sign In</a> |
                                         <a href="index.php?module=membres&amp;action=register">Sign Up</a><?php } ?> |
-                                    <a href="">My cart</a>
+                                    <a href="index.php?module=cart&amp;action=addToCart">My cart</a>
                                 </div>
 
                             </nav>

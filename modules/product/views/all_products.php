@@ -5,15 +5,17 @@
     <div class="row">
 
         <?php foreach ($allProducts as $product) {
-            echo '<a href="index.php?module=product&amp;action=see_product&amp;id_product=' . $product[0] . '">';
+
             echo '<div class="col-md-4 col-sm-6 col-xs-12  " >';
             echo '<div class="product" >';
-
+            echo '<a href="index.php?module=product&amp;action=see_product&amp;id_product=' . $product[0] . '">';
             echo '<div class="product__transform" >';
-            echo '<img src = "' . 'images/' . $product[4] . '" alt = "product" width = "100%" >';
+            echo '<img class="product__transform" src = "images/' . $product[4] . '" alt = "product" >';
             echo '</div >';
 
-            echo '<h3 class="product__title" >' . $product[1] . '</h3 >';
+            echo '<h3 class="product__title" >' . $product[1] . '</a></h3 >';
+
+            echo '<div class="product__title--cart"><a href="index.php?module=cart&amp;action=addToCart&amp;id_product=' . $product[0] . '"><img src="images/cart.png" alt="icon for the cart" /></a></div>';
 
             echo '<h2>' . $product[6] . ' $</h2>';
 
@@ -22,7 +24,7 @@
             echo '</div >';
             echo '</div >';
         } ?>
-        </a>
+
 
     </div>
 </div>
