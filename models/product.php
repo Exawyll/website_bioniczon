@@ -26,7 +26,7 @@ function getProductById($idProduct)
     $query->bindValue(':id_product', $idProduct);
     $query->execute();
 
-    if ($result = $query->fetchAll()) {
+    if ($result = $query->fetch()) {
         $query->closeCursor();
         return $result;
     }

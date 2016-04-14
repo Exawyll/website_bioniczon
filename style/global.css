@@ -32,9 +32,10 @@ h2, h3, h4, h5, h6 {
 }
 
 #centre {
+    background-color: #EEEEEE;
     margin: 10em 0em;
     padding: 1em;
-    background-color: #eeeeee;
+
 }
 
 #bas {

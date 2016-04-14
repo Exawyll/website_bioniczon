@@ -7,6 +7,7 @@ if (!isset($_GET['id_product']) && !isset($_GET['id_category'])) {
 
     //We first get all the products available
     $allProducts = getAllProducts();
+    $name = 'All the products';
 
     //And we display them
     require_once PATH_VIEW . 'all_products.php';
@@ -25,6 +26,10 @@ if (!isset($_GET['id_product']) && !isset($_GET['id_category'])) {
 } elseif (isset($_GET['id_category'])) {
 
     $idCategory = intval($_GET['id_category']);
+
+    $page = getCategories();
+    $name = $page[$idCategory - 1][1];
+
     $allProducts = getProductByCategory($idCategory);
 
     //And we display them

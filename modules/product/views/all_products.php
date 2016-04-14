@@ -1,6 +1,6 @@
 <div class="products container-fluid">
 
-    <h2 class="products__title">Articles</h2>
+    <h2 class="products__title">Articles > <?php echo $name ?></h2>
 
     <div class="row">
 
