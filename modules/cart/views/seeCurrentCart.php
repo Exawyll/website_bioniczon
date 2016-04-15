@@ -15,9 +15,8 @@
         </tr>
         </thead>
 
-        <?php if (!empty($itemArray)) {
-            foreach ($itemArray as $item) { var_dump($_SESSION['cart_item'])?>
-
+        <?php if (!empty($_SESSION['cart_item'])) {
+            foreach ($_SESSION['cart_item'] as $item) { ?>
                 <tr>
                     <td><?php echo $item['name']; ?>
                     </td>
@@ -25,10 +24,15 @@
                              alt="picture product" width="100px"></td>
                     <td><?php echo $item['quantity']; ?>
                     </td>
-                    <td><?php echo $item['price']; ?>
+                    <td><?php echo $item['price'] . ' $'; ?>
                     </td>
                     <td>
-                        <button type="submit" class="btn btn-success">Buy</button>
+                        <a href="index.php?module=cart&amp;action=addToCart&amp;id_product=<?php echo $item['id']; ?>&amp;function=remove">
+                            <button type="submit" class="btn btn-success">Remove</button>
+                        </a>
+                        <a href="index.php?module=cart&amp;action=addToCart&amp;function=unset">
+                            <button type="submit" class="btn btn-success">Unset Cart</button>
+                        </a>
                     </td>
                 </tr>
             <?php }

@@ -1,8 +1,6 @@
 <?php
 
-
-
-if (isset($_GET['id_product'])) {
+if (isset($_GET['id_product']) && $_GET['function'] === 'add') {
 
 // Call the model for products
     require_once PATH_MODEL . 'product.php';
@@ -19,7 +17,21 @@ if (isset($_GET['id_product'])) {
 //    }
 
     //Get the full items in the cart
-    $itemArray = $myCart->getProductArray();
+//    $itemArray = $_SESSION['cart_item']/*$myCart->getProductArray()*/;
+
+//    unset($_SESSION['cart_item']);
+
+    require_once PATH_VIEW . 'seeCurrentCart.php';
+
+} else if (isset($_GET['id_product']) && $_GET['function'] === 'remove') {
+
+    $myCart->remove(intval($_GET['id_product']));
+
+    require_once PATH_VIEW . 'seeCurrentCart.php';
+
+} else if (isset($_GET['function']) && $_GET['function'] === 'unset') {
+
+    $myCart->unsetCart();
 
     require_once PATH_VIEW . 'seeCurrentCart.php';
 

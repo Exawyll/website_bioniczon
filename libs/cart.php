@@ -22,55 +22,38 @@ class Cart
 
     public function add($product)
     {
+//        unset($_SESSION["cart_item"]);
         $this->productArray = array(
-            $product["id"] => array(
-                'name' => $product["name"],
-                'picture' => $product["picture"],
+            (string)($product['id']) => array(
+                'id' => $product['id'],
+                'name' => $product['name'],
+                'picture' => $product['picture'],
                 'quantity' => 1,
-                'price' => $product["price"]
+                'price' => $product['price']
             )
         );
 
-        if (!empty($_SESSION["cart_item"])) {
-            if (in_array($product["id"], $_SESSION["cart_item"])) {
-                foreach ($_SESSION["cart_item"] as $k => $v) {
-                    if ($product["id"] == $k) {
-                        $_SESSION["cart_item"][$k]["quantity"]++;
-                    }
-                }
+        if (!empty($_SESSION['cart_item'])) {
+            if (isset($_SESSION['cart_item'][(string)($product["id"])])) {
+
+                $_SESSION['cart_item'][(string)($product["id"])]['quantity']++;
+
             } else {
-                $_SESSION["cart_item"] = array_merge($_SESSION["cart_item"], $this->productArray);
+                $_SESSION['cart_item'][(string)($product["id"])] = $this->productArray[(string)($product["id"])];
             }
         } else {
-            $_SESSION["cart_item"] = $this->productArray;
+
+            $_SESSION['cart_item'] = $this->productArray;
         }
     }
 
-    public function remove($product)
+    public function remove($idProduct)
     {
-        if (!empty($_SESSION["cart_item"])) {
-            foreach ($_SESSION["cart_item"] as $k => $v) {
-                if ($_GET["code"] == $k)
-                    unset($_SESSION["cart_item"][$k]);
-                if (empty($_SESSION["cart_item"]))
-                    unset($_SESSION["cart_item"]);
-            }
-        }
+        unset($_SESSION['cart_item'][(string)($idProduct)]);
     }
 
     public function unsetCart()
     {
         unset($_SESSION["cart_item"]);
-    }
-
-    // Check if product already in the shopping cart
-    public function findId($idProduct)
-    {
-        foreach ($_SESSION['cart']['product'] as $product) {
-            if ($product['id'] === $idProduct) {
-                return true;
-            }
-        }
-        return false;
     }
 }

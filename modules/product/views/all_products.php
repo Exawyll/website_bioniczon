@@ -15,7 +15,7 @@
 
             echo '<h3 class="product__title" >' . $product[1] . '</a></h3 >';
 
-            echo '<div class="product__title--cart"><a href="index.php?module=cart&amp;action=addToCart&amp;id_product=' . $product[0] . '"><img src="images/cart.png" alt="icon for the cart" /></a></div>';
+            echo '<div class="product__title--cart"><a href="index.php?module=cart&amp;action=addToCart&amp;id_product=' . $product[0] . '&amp;function=add"><img src="images/cart.png" alt="icon for the cart" /></a></div>';
 
             echo '<h2>' . $product[6] . ' $</h2>';
 
