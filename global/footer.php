@@ -1,3 +1,4 @@
+<script src="js/cart.js"></script>
 </main>
 </div>
 </div>

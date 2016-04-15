@@ -19,8 +19,8 @@
             <?php } ?>
         </div>
 
-        <div class="col-lg-6 col-lg-push-1 col-md-3 col-xs-12 accueil__second">
-            <iframe width="420" height="315" src="https://www.youtube.com/embed/W0_DPi0PmF0?autoplay=1" ></iframe>
+        <div class="col-lg-6 col-md-3 col-xs-12 accueil__second">
+            <iframe width="400" height="295" src="https://www.youtube.com/embed/W0_DPi0PmF0?autoplay=1" ></iframe>
         </div>
 
         <div class="col-lg-3 col-md-12 col-xs-12 accueil__third">

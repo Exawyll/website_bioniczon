@@ -9,7 +9,7 @@ a {
 
 body {
     background: url('../images/back.jpeg');
-    width: 90%;
+    width: 100%;
 }
 
 body, #menu, #centre
@@ -78,7 +78,7 @@ table {
 
 .accueil__first {
     border: 1px solid #3c3c3c;
-    height: 315px;
+    height: 295px;
 }
 
 .accueil__second {
@@ -87,6 +87,7 @@ table {
 
 .accueil__third--title {
     height: 25px;
+    margin-left: 25px;
 }
 
 .accueil__third--img {
@@ -110,6 +111,14 @@ table {
     body {
         width: 100%;
     }
+
+    #centre {
+        margin: 1em 0em;
+    }
+
+    #menu {
+        margin: 1em 0em;
+    }
 }
 
 /* Sur tous types d'écran, quand la largeur de la fenêtre est comprise entre 1024px et 1280px */
@@ -117,6 +126,19 @@ table {
     body {
         width: 100%;
     }
+
+    #centre {
+        margin: 1em 0em;
+    }
+
+    #menu {
+        margin: 1em 0em;
+    }
+}
+
+#totalCart {
+    font-size: 30px;
+    text-align: center;
 }
 
 

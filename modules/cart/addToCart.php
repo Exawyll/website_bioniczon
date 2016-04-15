@@ -21,7 +21,7 @@ if (isset($_GET['id_product']) && $_GET['function'] === 'add') {
 
 //    unset($_SESSION['cart_item']);
 
-    require_once PATH_VIEW . 'seeCurrentCart.php';
+//    require_once PATH_VIEW . 'seeCurrentCart.php';
 
 } else if (isset($_GET['id_product']) && $_GET['function'] === 'remove') {
 

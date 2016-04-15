@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="style/global.css" type="text/css"/>
     <link rel="stylesheet" href="style/header.css" type="text/css"/>
     <link rel="stylesheet" href="style/product.css" type="text/css"/>
-    <link rel="stylesheet" href="style/accueil.css" type="text/css"/>
+<!--    <link rel="stylesheet" href="style/accueil.css" type="text/css"/>-->
 
 </head>
 

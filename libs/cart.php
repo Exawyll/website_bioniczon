@@ -22,7 +22,6 @@ class Cart
 
     public function add($product)
     {
-//        unset($_SESSION["cart_item"]);
         $this->productArray = array(
             (string)($product['id']) => array(
                 'id' => $product['id'],
@@ -41,15 +40,34 @@ class Cart
             } else {
                 $_SESSION['cart_item'][(string)($product["id"])] = $this->productArray[(string)($product["id"])];
             }
+
         } else {
 
             $_SESSION['cart_item'] = $this->productArray;
+
         }
+
+
     }
 
     public function remove($idProduct)
     {
-        unset($_SESSION['cart_item'][(string)($idProduct)]);
+        if (isset($_SESSION['cart_item'][(string)($idProduct)])) {
+
+            if ($_SESSION['cart_item'][(string)($idProduct)]['quantity'] > 1) {
+
+                $_SESSION['cart_item'][(string)($idProduct)]['quantity']--;
+
+            } else {
+
+                unset($_SESSION['cart_item'][(string)($idProduct)]);
+
+                if (empty($_SESSION['cart_item'])) {
+
+                    unset($_SESSION['cart_item']);
+                }
+            }
+        }
     }
 
     public function unsetCart()
