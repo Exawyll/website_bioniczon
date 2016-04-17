@@ -26,14 +26,14 @@ h2, h3, h4, h5, h6 {
 #menu {
     /*float: left;*/
     /*width: 15%;*/
-    margin: 10em 0em;
+    margin: 15em 0em;
     padding: 1em;
     background-color: #5edc82;
 }
 
 #centre {
     background-color: #EEEEEE;
-    margin: 10em 0em;
+    margin: 15em 0em;
     padding: 1em;
 
 }
@@ -72,22 +72,23 @@ table {
     margin-top: 20px;
 }
 
-.accueil--header {
+/*.accueil--header {
     margin-left: -40px;
-}
-
-.accueil__first {
-    border: 1px solid #3c3c3c;
-    height: 295px;
-}
+}*/
 
 .accueil__second {
-    /*margin-left: 40px;*/
+    margin-left: 40px;
+}
+
+.accueil__third {
+    margin-left: -60px;
 }
 
 .accueil__third--title {
+    text-align: center;
     height: 25px;
     margin-left: 25px;
+
 }
 
 .accueil__third--img {
@@ -104,6 +105,15 @@ table {
     body {
         width: 90%;
     }
+
+    .accueil__first {
+        border: 1px solid #3c3c3c;
+        height: 295px;
+    }
+
+    .accueil__second {
+        margin-left: 40px;
+    }
 }
 
 /* Sur tous types d'écran, quand la largeur de la fenêtre est comprise entre 1024px et 1280px */
@@ -119,6 +129,33 @@ table {
     #menu {
         margin: 1em 0em;
     }
+
+    .accueil__first {
+        border: 1px solid #3c3c3c;
+        height: 195px;
+    }
+
+    .accueil__second {
+        margin-left: 40px;
+    }
+
+    .accueil__third {
+        margin-left: -60px;
+    }
+
+    .accueil__third--title {
+        height: 25px;
+        margin-left: 45px;
+    }
+
+    .accueil__third--img {
+        background: url("../images/leg4.jpg") no-repeat;
+        background-size: contain;
+        height: 290px;
+        padding-right: -10px;
+        padding-top: -50px;
+        width: 70%;
+    }
 }
 
 /* Sur tous types d'écran, quand la largeur de la fenêtre est comprise entre 1024px et 1280px */
@@ -133,6 +170,33 @@ table {
 
     #menu {
         margin: 1em 0em;
+    }
+
+    .accueil__first {
+        border: 1px solid #3c3c3c;
+        height: 195px;
+    }
+
+    .accueil__second {
+        margin-left: -20px;
+    }
+
+    .accueil__third {
+        margin-left: -60px;
+    }
+
+    .accueil__third--title {
+        height: 25px;
+        margin-left: 45px;
+    }
+
+    .accueil__third--img {
+        background: url("../images/leg4.jpg") no-repeat;
+        background-size: contain;
+        height: 290px;
+        padding-right: -10px;
+        padding-top: -50px;
+        width: 70%;
     }
 }
 

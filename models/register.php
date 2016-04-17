@@ -4,7 +4,7 @@ function addUserInDB($firstname, $lastname, $login, $mdp, $email) {
 
     $pdo = PDO2::getInstance();
 
-    $requete = $pdo->prepare("INSERT INTO user SET
+    $query = $pdo->prepare("INSERT INTO user SET
 		firstname = :firstname,
 		lastname = :lastname,
 		login = :login,
@@ -12,15 +12,15 @@ function addUserInDB($firstname, $lastname, $login, $mdp, $email) {
 		email = :email,
 		registerDate = NOW()");
 
-    $requete->bindValue(':firstname', $firstname);
-    $requete->bindValue(':lastname', $lastname);
-    $requete->bindValue(':login', $login);
-    $requete->bindValue(':password', $mdp);
-    $requete->bindValue(':email', $email);
+    $query->bindValue(':firstname', $firstname);
+    $query->bindValue(':lastname', $lastname);
+    $query->bindValue(':login', $login);
+    $query->bindValue(':password', $mdp);
+    $query->bindValue(':email', $email);
 
-    if ($requete->execute()) {
+    if ($query->execute()) {
 
         return $pdo->lastInsertId();
     }
-    return $requete->errorInfo();
+    return $query->errorInfo();
 }

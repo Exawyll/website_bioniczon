@@ -3,10 +3,10 @@
 <div style="overflow-x:auto;">
 
     <a href="index.php?module=cart&amp;action=addToCart&amp;function=unset">
-        <button type="submit" class="btn btn-success">Empty my shopping Cart</button>
+        <button type="submit" class="btn btn-warning">Empty my shopping Cart</button>
     </a>
 
-    <table class="table table-striped">
+    <table class="table table-hover">
 
         <thead>
         <tr>
@@ -31,7 +31,7 @@
                     </td>
                     <td>
                         <a href="index.php?module=cart&amp;action=addToCart&amp;id_product=<?php echo $item['id']; ?>&amp;function=remove">
-                            <button type="submit" class="btn btn-success">Remove</button>
+                            <button type="submit" class="btn btn-danger"><img src="/ecommerce/images/delete.png" alt="bin"></button>
                         </a>
 
                     </td>
@@ -55,8 +55,11 @@
     <p style="text-align: center; font-size: 30px;"><b>Total of your shopping cart : <input type="text" id="totalCart"></b></p>
 
     <div style="float: right">
-        <button >Order...</button>
-        <img src="/ecommerce/images/order.png" alt="order">
+        <a href="index.php?module=cart&amp;action=orderTunnel">
+            <button class="btn btn-primary">Order...</button>
+            <img src="/ecommerce/images/order.png" alt="order">
+        </a>
+
     </div>
 
 

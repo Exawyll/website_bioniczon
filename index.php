@@ -1,7 +1,7 @@
 <?php
 
 // Inclusion du fichier de configuration (qui définit des constantes)
-include 'global/init.php';
+require_once 'global/init.php';
 
 // Début de la tamporisation de sortie
 ob_start();

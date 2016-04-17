@@ -8,11 +8,14 @@
 
     <title>BionicZon</title>
 
-    <link rel="stylesheet" href="style/bootstrap.css" type="text/css"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="style/global.css" type="text/css"/>
     <link rel="stylesheet" href="style/header.css" type="text/css"/>
     <link rel="stylesheet" href="style/product.css" type="text/css"/>
-<!--    <link rel="stylesheet" href="style/accueil.css" type="text/css"/>-->
+    <link rel="stylesheet" href="style/owlcarousel/assets/owl.carousel.css">
+    <link rel="stylesheet" href="style/owlcarousel/assets/owl.theme.default.min.css">
+    <!--    <link rel="stylesheet" href="style/accueil.css" type="text/css"/>-->
 
 </head>
 
@@ -43,8 +46,14 @@
                                 <div class="header__nav--link2 col-lg-6" style="text-align: right">
 
                                     <?php if (userSignedIn()) { ?>
-                                        <a href="index.php?module=membres&amp;action=profile&amp;id="<?php echo $_SESSION['id']; ?>><?php echo 'Hi, ' . $_SESSION['login']; ?></a>
-                                    <?php } else { ?>
+                                        <?php if (adminUser()) { ?>
+                                            <a href="index.php?module=membres&amp;action=profile&amp;id="<?php echo $_SESSION['id']; ?>>Admin space</a> |
+                                            <a href="index.php?module=membres&amp;action=disconnection">Logout</a>
+                                        <?php } else { ?>
+                                            <a href="index.php?module=membres&amp;action=profile&amp;id="<?php echo $_SESSION['id']; ?>><?php echo 'Hi, ' . $_SESSION['login']; ?></a> |
+                                            <a href="index.php?module=membres&amp;action=disconnection">Logout</a>
+                                        <?php }
+                                    } else { ?>
                                         <a href="index.php?module=membres&amp;action=sign_in">Sign In</a> |
                                         <a href="index.php?module=membres&amp;action=register">Sign Up</a><?php } ?> |
                                     <a href="index.php?module=cart&amp;action=addToCart">My cart</a>
@@ -60,7 +69,8 @@
 
             <div class="container-fluid">
                 <div class="row">
-                    <?php if (!empty($_SESSION['admin'])) { ?>
+
+                    <?php if (isset($_GET['module']) && isset($_GET['action']) && $_GET['module'] == 'membres' && $_GET['action'] == 'profile') { ?>
 
                     <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
 
