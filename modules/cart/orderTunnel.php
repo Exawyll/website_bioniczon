@@ -6,58 +6,67 @@ if (!userSignedIn()) {
     require_once PATH_GLOBAL_VIEW . 'error_toBuy.php';
 
 } else {
+    if (isset($_GET['function']) && $_GET['function'] == 'address') {
 
-    //Get the model to access DB
-    require_once PATH_MODEL . 'order.php';
+        //Get the model to access DB
+        require_once PATH_MODEL . 'order.php';
 
-    $userAddress = getUserAddress(intval($_SESSION['id']));
+        $userAddress = getUserAddress(intval($_SESSION['id']));
 
-    // Ne pas oublier d'inclure la librairie Form
-    require_once PATH_LIB . 'form.php';
+        // Ne pas oublier d'inclure la librairie Form
+        require_once PATH_LIB . 'form.php';
 
-    // "formulaire_inscription" est l'ID unique du formulaire
-    $formAddress = new Form('address_form');
+        // "formulaire_inscription" est l'ID unique du formulaire
+        $formAddress = new Form('address_form');
 
-    $formAddress->method('POST');
+        $formAddress->method('POST');
 
-    $formAddress->add('Text', 'firstname')
-        ->label("Firstname");
+        $formAddress->add('Text', 'firstname')
+            ->label("Firstname");
 
-    $formAddress->add('Text', 'lastname')
-        ->label("Lastname");
+        $formAddress->add('Text', 'lastname')
+            ->label("Lastname");
 
-    $formAddress->add('Text', 'number')
-        ->label("Street Number");
+        $formAddress->add('Text', 'number')
+            ->label("Street Number");
 
-    $formAddress->add('Text', 'street')
-        ->label("Street Name");
+        $formAddress->add('Text', 'street')
+            ->label("Street Name");
 
-    $formAddress->add('Text', 'city')
-        ->label("City");
+        $formAddress->add('Text', 'city')
+            ->label("City");
 
-    $formAddress->add('Text', 'zipcode')
-        ->label("Zipcode");
+        $formAddress->add('Text', 'zipcode')
+            ->label("Zipcode");
 
-    $formAddress->add('Submit', 'submit')
-        ->value("New Address");
+        $formAddress->add('Submit', 'submit')
+            ->value("New Address");
 
-    //display the addresses view
-    require_once PATH_VIEW . 'addresses.php';
+        $formAddress->bound($_POST);
 
-    if ($formAddress->is_valid($_POST)) {
+        //display the addresses view
+        require_once PATH_VIEW . 'addresses.php';
 
-        $idUser = $_SESSION['id'];
+        if ($formAddress->is_valid($_POST)) {
 
-        //Add in the DB
-        list($city, $number, $postalCode, $streetName, $firstName, $lastName) =
-            $formAddress->get_cleaned_data('city', 'number', 'zipcode', 'street', 'firstname', 'lastname');
+            $idUser = $_SESSION['id'];
 
-        $newAddress = addUserAddress(intval($idUser), $city, intval($number), intval($postalCode), $streetName, $firstName, $lastName);
+            //List the data before insertion in the DB
+            list($city, $number, $postalCode, $streetName, $firstName, $lastName) =
+                $formAddress->get_cleaned_data('city', 'number', 'zipcode', 'street', 'firstname', 'lastname');
 
-        if (ctype_digit($newAddress)) {
-            echo 'it\'s good!';
+            //Call the function to insert a new address
+            $newAddress = addUserAddress(intval($idUser), $city, intval($number), intval($postalCode), $streetName, $firstName, $lastName);
+
+            if (ctype_digit($newAddress)) {
+
+                //display again the addresses view updated with the new address
+                require_once PATH_VIEW . 'addresses.php';
+            }
         }
+    } else if (isset($_GET['function']) && $_GET['function'] == 'payment') {
 
+        //Bring the payment page
+        require_once PATH_VIEW . 'payment.php';
     }
-
 }

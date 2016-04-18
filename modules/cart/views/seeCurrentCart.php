@@ -52,10 +52,10 @@
 
     </table>
 
-    <p style="text-align: center; font-size: 30px;"><b>Total of your shopping cart : <input type="text" id="totalCart"></b></p>
+    <p style="text-align: center; font-size: 30px;"><b>Total of your shopping cart : <input type="text" id="totalCart" disabled></b></p>
 
     <div style="float: right">
-        <a href="index.php?module=cart&amp;action=orderTunnel">
+        <a href="index.php?module=cart&amp;action=orderTunnel&amp;function=address">
             <button class="btn btn-primary">Order...</button>
             <img src="/ecommerce/images/order.png" alt="order">
         </a>

@@ -5,9 +5,10 @@ function getUserAddress($idUser)
     $pdo = PDO2::getInstance();
 
     $query = $pdo->prepare("SELECT * FROM address WHERE
-		id = :id");
+        id_user = :id_user;");
 
-    $query->bindValue(':id', intval($idUser));
+    $query->bindValue(':id_user', $idUser);
+
     $query->execute();
 
     $result = $query->fetchAll();
@@ -19,9 +20,6 @@ function addUserAddress($idUser, $city, $number, $postalCode, $streetName, $firs
 {
     $pdo = PDO2::getInstance();
 
-    var_dump($city);
-    var_dump($firstName);
-
     $query = $pdo->prepare("INSERT INTO address SET
         id_user = :id_user,
         city = :city,
@@ -31,26 +29,15 @@ function addUserAddress($idUser, $city, $number, $postalCode, $streetName, $firs
         firstname = :firstName,
         lastname = :lastName");
 
-    $tab = array(
-        'id_user' => $idUser,
-        'city' => $city,
-        'num' => $number,
-        'postalCode' => $postalCode,
-        'streetName' => $streetName,
-        'firstname' => $firstName,
-        'lastname' => $lastName
-    );
-    var_dump($query);
+    $query->bindValue(':id_user', $idUser);
+    $query->bindValue(':city', $city);
+    $query->bindValue(':num', $number);
+    $query->bindValue(':postalCode', $postalCode);
+    $query->bindValue(':streetName', $streetName);
+    $query->bindValue(':firstName', $firstName);
+    $query->bindValue(':lastName', $lastName);
 
-//    $query->bindValue(':id_user', $idUser);
-//    $query->bindValue(':city', $city);
-//    $query->bindValue(':num', $number);
-//    $query->bindValue(':zipcode', $postalCode);
-//    $query->bindValue(':streetName', $streetName);
-//    $query->bindValue(':firstname', $firstName);
-//    $query->bindValue(':lastname', $lastName);
-
-    if ($query->execute($tab)) {
+    if ($query->execute()) {
 
         return $pdo->lastInsertId();
     }
