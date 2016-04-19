@@ -4,8 +4,12 @@
 
     <div class="row">
 
-        <?php foreach ($allProducts as $product) {
 
+        <?php foreach ($allProducts as $product) { ?>
+
+        <form method="post" action="">
+
+            <?php
             echo '<div class="col-md-4 col-sm-6 col-xs-12  " >';
             echo '<div class="product" >';
             echo '<a href="index.php?module=product&amp;action=see_product&amp;id_product=' . $product[0] . '">';
@@ -15,7 +19,7 @@
 
             echo '<h3 class="product__title" >' . $product[1] . '</a></h3 >';
 
-            echo '<div class="product__title--cart"><a href="index.php?module=cart&amp;action=addToCart&amp;id_product=' . $product[0] . '&amp;function=add"><img src="images/cart.png" alt="icon for the cart" /></a></div>';
+            echo '<div class="product__title--cart btn-default"><a type="submit" href="index.php?module=cart&amp;action=addToCart&amp;id_product=' . $product[0] . '&amp;function=add"><img src="images/cart.png" alt="icon for the cart" /></a></div>';
 
             echo '<h2>' . $product[6] . ' $</h2>';
 
@@ -23,8 +27,9 @@
 
             echo '</div >';
             echo '</div >';
-        } ?>
+            } ?>
 
 
+        </form>
     </div>
 </div>

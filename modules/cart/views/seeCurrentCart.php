@@ -55,12 +55,14 @@
     <p style="text-align: center; font-size: 30px;"><b>Total of your shopping cart : <input type="text" id="totalCart" disabled></b></p>
 
     <div style="float: right">
+
         <a href="index.php?module=cart&amp;action=orderTunnel&amp;function=address">
-            <button class="btn btn-primary">Order...</button>
-            <img src="/ecommerce/images/order.png" alt="order">
+            <button class="btn btn-primary">Order... <img src="/ecommerce/images/order.png" alt="order"></button>
         </a>
 
     </div>
 
 
 </div>
+
+<script src="js/cart.js"></script>

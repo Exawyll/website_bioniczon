@@ -1,6 +1,7 @@
 <?php
 
-function updateUserAvatar($idUser , $avatar) {
+function updateUserAvatar($idUser, $avatar)
+{
 
     $pdo = PDO2::getInstance();
 
@@ -31,7 +32,8 @@ function updateUserAvatar($idUser , $avatar) {
     return ($query->rowCount() == 1);
 }*/
 
-function validateSignIn($login, $password) {
+function validateSignIn($login, $password)
+{
 
     $pdo = PDO2::getInstance();
 
@@ -52,7 +54,8 @@ function validateSignIn($login, $password) {
     return false;
 }
 
-function infoUser($idUser) {
+function infoUser($idUser)
+{
 
     $pdo = PDO2::getInstance();
 
@@ -70,4 +73,35 @@ function infoUser($idUser) {
         return $result;
     }
     return false;
+}
+
+function getAllUsers()
+{
+    $pdo = PDO2::getInstance();
+
+    $query = $pdo->prepare("SELECT * from user");
+
+    $query->execute();
+
+    return $query->fetchAll();
+}
+
+function turnUserAdmin($idUser) {
+    $pdo = PDO2::getInstance();
+
+    $query = $pdo->prepare("UPDATE user SET admin=1 WHERE id=:id");
+
+    $query->bindValue(':id', $idUser);
+
+    return $query->execute();
+}
+
+function turnUserNotAdmin($idUser) {
+    $pdo = PDO2::getInstance();
+
+    $query = $pdo->prepare("UPDATE user SET admin=0 WHERE id=:id");
+
+    $query->bindValue(':id', $idUser);
+
+    return $query->execute();
 }

@@ -47,10 +47,10 @@
 
                                     <?php if (userSignedIn()) { ?>
                                         <?php if (adminUser()) { ?>
-                                            <a href="index.php?module=membres&amp;action=profile&amp;id="<?php echo $_SESSION['id']; ?>>Admin space</a> |
+                                            <a href="index.php?module=backOffice&amp;action=profile&amp;id="<?php echo $_SESSION['id']; ?>>Admin space</a> |
                                             <a href="index.php?module=membres&amp;action=disconnection">Logout</a>
                                         <?php } else { ?>
-                                            <a href="index.php?module=membres&amp;action=profile&amp;id="<?php echo $_SESSION['id']; ?>><?php echo 'Hi, ' . $_SESSION['login']; ?></a> |
+                                            <a href="index.php?module=backOffice&amp;action=profile&amp;id="<?php echo $_SESSION['id']; ?>><?php echo 'Hi, ' . $_SESSION['login']; ?></a> |
                                             <a href="index.php?module=membres&amp;action=disconnection">Logout</a>
                                         <?php }
                                     } else { ?>
@@ -70,7 +70,7 @@
             <div class="container-fluid">
                 <div class="row">
 
-                    <?php if (isset($_GET['module']) && isset($_GET['action']) && $_GET['module'] == 'membres' && $_GET['action'] == 'profile') { ?>
+                    <?php if (isset($_GET['module']) && isset($_GET['action']) && $_GET['module'] == 'backOffice') { ?>
 
                     <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
 

@@ -43,7 +43,7 @@ if (userSignedIn()) {
         $idUser = validateSignIn($login, sha1($password));
 
         // Si les identifiants sont valides
-        if (false !== $idUser) {
+        if (ctype_digit($idUser)) {
 
             $userInfo = infoUser($idUser);
 
@@ -58,18 +58,6 @@ if (userSignedIn()) {
 
             // Affichage de la confirmation de la connexion
             require_once PATH_VIEW . 'connexion_ok.php';
-
-            if (!empty($_SESSION['id'])) {
-
-                // L'utilisateur connecté, on peut récupérer :
-                // $_SESSION['id']     - son id utilisateur
-                // $_SESSION['pseudo'] - son nom d'utilisateur
-                // $_SESSION['avatar'] - son avatar (s'il existe)
-
-            } else {
-
-                // Utilisateur non connecté
-            }
 
         } else {
 

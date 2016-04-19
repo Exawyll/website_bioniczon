@@ -7,17 +7,9 @@ var Cart = function (listObjectHTML, listOfQuantities) {
     this.listObject = listObjectHTML;
     this.elTotal = document.getElementById('totalCart');
     this.elQuantity = listOfQuantities;
-    this.elHt = document.getElementById('ht');
-    this.elVat = document.getElementById('vat');
-    this.elTtc = document.getElementById('ttc');
-    this.elFreight = document.getElementById('freight_charges');
-    this.elPay = document.getElementById('toPay');
 
-    var price = self.init();
+    self.init();
 
-    if (window.location.pathname == '/payment.php') {
-        self.summary(price);
-    }
 };
 
 Cart.prototype.init = function () {
@@ -28,33 +20,36 @@ Cart.prototype.init = function () {
     }
 
     this.elTotal.value = price + ' $';
+    this.elHt.value = this.ht(price) + ' $';
+    this.elVat.value = this.vat(price) + ' $';
+    this.elTtc.value = this.ttc(price) + ' $';
+    this.elFreight.value = this.freight_charges(price) + ' $';
 
     return price;
 };
 
-Cart.prototype.summary = function (price) {
-    var htPrice = Math.round(this.ht(price));
-    console.log(htPrice);
-    this.elHt.value = htPrice + ' $';
-    this.elVat.value = this.vat(price) + ' $';
-    this.elTtc.value = this.ttc(price) + ' $';
-    this.elFreight.value = this.freight_charges(price) + ' $';
+var newCart = new Cart(document.getElementsByClassName('price'), document.getElementsByClassName('quantity'));
+
+var SumCart = function () {
+    this.elHt = document.getElementById('ht');
+    this.elVat = document.getElementById('vat');
+    this.elTtc = document.getElementById('ttc');
+    this.elFreight = document.getElementById('freight_charges');
+    this.elPay = document.getElementById('toPay');
 };
 
-Cart.prototype.ht = function (price) {
+SumCart.prototype.ht = function (price) {
     return price - (0.196 * price);
 };
 
-Cart.prototype.vat = function (price) {
+SumCart.prototype.vat = function (price) {
     return 0.196 * price;
 };
 
-Cart.prototype.freight_charges = function (price) {
+SumCart.prototype.freight_charges = function (price) {
     return (0.01 * price);
 };
 
-Cart.prototype.ttc = function (price) {
+SumCart.prototype.ttc = function (price) {
     return price + this.freight_charges(price);
 };
-
-var newCart = new Cart(document.getElementsByClassName('price'), document.getElementsByClassName('quantity'));

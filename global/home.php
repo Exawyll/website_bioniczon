@@ -7,10 +7,7 @@
             <div><img src="images/carousel/future-sentient-robot.jpg" alt="robot" width="100%"></div>
             <div><img src="images/carousel/indian_robots.jpg" alt="robot" width="100%"></div>
             <div><img src="images/carousel/Medical.jpg" alt="robot" width="100%"></div>
-            <div><img src="images/carousel/numbers.jpg" alt="robot" width="100%"></div>
-            <div>
-                <iframe width="354" height="200" src="https://www.youtube.com/embed/W0_DPi0PmF0?autoplay=1"></iframe>
-            </div>
+            <div><img class="iframe" src="images/carousel/numbers.jpg" alt="robot" width="100%"></div>
         </div>
         <div class="col-lg-3 col-md-2 col-xs-0 "></div>
     </div>
@@ -40,7 +37,7 @@
         </div>
 
         <div class="col-lg-6 col-md-3 col-xs-12 accueil__second">
-            <iframe width="400" height="295" src="https://www.youtube.com/embed/W0_DPi0PmF0?autoplay=1"></iframe>
+            <iframe class="iframe" width="400" height="295" src="https://www.youtube.com/embed/W0_DPi0PmF0?autoplay=1"></iframe>
         </div>
 
         <div class="col-lg-3 col-md-12 col-xs-12 accueil__third">

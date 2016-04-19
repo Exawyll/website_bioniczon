@@ -29,6 +29,33 @@
                 </a>
 
             <?php } ?>
+            <hr>
+            <h4>Write a new comment</h4>
+
+            <form action="index.php?module=product&amp;action=comment&amp;id_product=<?php echo $product['id']; ?>" method="post">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" id="title" placeholder="title" name="title">
+                </div>
+                <div class="form-group">
+                    <label for="author">Author</label>
+                    <input type="text" class="form-control" id="author" placeholder="author" name="author">
+                </div>
+                <label for="comment">Comment</label>
+                <textarea class="form-control" rows="3" id="comment" placeholder="Write a comment..."
+                          name="comment"></textarea><br>
+
+                <label for="rating">Finally give a mark</label>
+                <div class="rating">
+                    <span><input type="radio" name="rating" id="str5" value="5"><label for="str5"></label></span>
+                    <span><input type="radio" name="rating" id="str4" value="4"><label for="str4"></label></span>
+                    <span><input type="radio" name="rating" id="str3" value="3"><label for="str3"></label></span>
+                    <span><input type="radio" name="rating" id="str2" value="2"><label for="str2"></label></span>
+                    <span><input type="radio" name="rating" id="str1" value="1"><label for="str1"></label></span>
+                </div>
+
+                <button style="float: right;" type="submit" class="btn btn-default">Give your opinion</button>
+            </form>
 
         </div>
     </div>

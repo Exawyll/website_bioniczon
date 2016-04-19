@@ -34,5 +34,5 @@ if (!isset($_GET['id_product']) && !isset($_GET['id_category'])) {
 
     //And we display them
     require_once PATH_VIEW . 'all_products.php';
-}
 
+}

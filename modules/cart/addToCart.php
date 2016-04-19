@@ -8,10 +8,13 @@ if (isset($_GET['id_product']) && $_GET['function'] === 'add') {
 // Get the product to add ant secure of the $_GET variable as a int
     $product = getProductById(intval($_GET['id_product']));
 
-// Call the function to add in the cart
-    $myCart->add($product);
+    if ($product['quantity'] > 0) {
+        // Call the function to add in the cart
+        $myCart->add($product);
 
-//    require_once PATH_VIEW . 'seeCurrentCart.php';
+        //Display if adding was a success
+        require_once PATH_VIEW . 'addCartSuccess.php';
+    }
 
 } else if (isset($_GET['id_product']) && $_GET['function'] === 'remove') {
 
