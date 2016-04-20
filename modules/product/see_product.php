@@ -20,6 +20,12 @@ if (!isset($_GET['id_product']) && !isset($_GET['id_category'])) {
     //Get the product
     $product = getProductById($idProduct);
 
+    var_dump($product);
+
+    $arr[] = htmlspecialchars(json_encode($product));
+
+    var_dump($arr);
+
     //Send to the view
     require_once PATH_VIEW . 'viewProduct.php';
 

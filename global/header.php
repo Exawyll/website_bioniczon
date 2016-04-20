@@ -8,13 +8,14 @@
 
     <title>BionicZon</title>
 
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link href="style/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="style/global.css" type="text/css"/>
     <link rel="stylesheet" href="style/header.css" type="text/css"/>
     <link rel="stylesheet" href="style/product.css" type="text/css"/>
     <link rel="stylesheet" href="style/owlcarousel/assets/owl.carousel.css">
     <link rel="stylesheet" href="style/owlcarousel/assets/owl.theme.default.min.css">
+    <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
     <!--    <link rel="stylesheet" href="style/accueil.css" type="text/css"/>-->
 
 </head>
