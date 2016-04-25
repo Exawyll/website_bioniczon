@@ -43,3 +43,42 @@ function addUserAddress($idUser, $city, $number, $postalCode, $streetName, $firs
     }
     return $query->errorInfo();
 }
+
+function addOrder()
+{
+    $pdo = PDO2::getInstance();
+
+    $query = $pdo->prepare("INSERT INTO orders SET
+      id_user = :id_user,
+      dateOrder = NOW(),
+      dateDelivery = NOW() + INTERVAL 2 DAY");
+
+    $query->bindValue(':id_user', $_SESSION['id']);
+
+    if ($query->execute()) {
+
+        return $pdo->lastInsertId();
+    }
+    return $query->errorInfo();
+}
+
+function addOrder_product($idOrder, $nameProduct, $price, $quantity) {
+    $pdo = PDO2::getInstance();
+
+    $query = $pdo->prepare("INSERT INTO order_product SET
+      id_orders = :id_orders,
+      nameProduct = :nameProduct,
+      price = :price,
+      quantity = :quantity");
+
+    $query->bindValue(':id_orders', $idOrder);
+    $query->bindValue(':nameProduct', $nameProduct);
+    $query->bindValue(':price', $price);
+    $query->bindValue(':quantity', $quantity);
+
+    if ($query->execute()) {
+
+        return $pdo->lastInsertId();
+    }
+    return $query->errorInfo();
+}

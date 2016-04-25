@@ -47,6 +47,4 @@ if (empty($_SESSION['id']) || !is_numeric($_SESSION['id'])) {
 
     // Pré-remplissage avec les valeurs précédemment entrées (s'il y en a)
     $formSignUp->bound($_POST);
-
-
 }

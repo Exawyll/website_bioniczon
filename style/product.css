@@ -31,7 +31,7 @@
 }
 
 .product__title {
-    color: #a6e1ec;
+    color: #7ECEFD;
     display: inline-block;
     font-size: 19px;
     margin-top: 20px;
@@ -40,7 +40,7 @@
 }
 
 .product__title--cart {
-    border: 1px solid silver;
+    border: 1px solid #DAEDE2;
     border-radius: 5px;
     display: inline-block;
     margin-left: 15px;
@@ -78,7 +78,7 @@
     height:30px;
     text-align:center;
     color:#FFF;
-    background:#ccc;
+    background:#DAEDE2;
     font-size:30px;
     margin-right:2px;
     line-height:30px;
@@ -90,5 +90,5 @@
 .rating span.checked label,
 .rating span.checked ~ span label {
     background:#F90;
-    color:#FFF;
+    color:#DAEDE2;
 }

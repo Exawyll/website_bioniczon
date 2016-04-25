@@ -38,16 +38,14 @@ class Cart
                 $_SESSION['cart_item'][(string)($product["id"])]['quantity']++;
 
             } else {
+
                 $_SESSION['cart_item'][(string)($product["id"])] = $this->productArray[(string)($product["id"])];
             }
 
         } else {
 
             $_SESSION['cart_item'] = $this->productArray;
-
         }
-
-
     }
 
     public function remove($idProduct)
@@ -70,8 +68,8 @@ class Cart
         }
     }
 
-    public function unsetCart()
-    {
-        unset($_SESSION["cart_item"]);
-    }
+//    public function unsetCart()
+//    {
+//        unset($_SESSION["cart_item"]);
+//    }
 }

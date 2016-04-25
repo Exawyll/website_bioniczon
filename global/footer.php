@@ -1,4 +1,3 @@
-<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <script src="https://code.jquery.com/jquery-1.12.3.js" integrity="sha256-1XMpEtA4eKXNNpXcJ1pmMPs8JV+nwLdEqwiJeCQEkyc="
         crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
@@ -7,6 +6,8 @@
 <script src="js/main.js"></script>
 <script src="js/owlcarousel/owl.carousel.js"></script>
 <script src="js/owlcarousel/owl.carousel.min.js"></script>
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript" src="js/payment.js"></script>
 
 </main>
 </div>

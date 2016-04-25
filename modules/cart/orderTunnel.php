@@ -61,12 +61,56 @@ if (!userSignedIn()) {
             if (ctype_digit($newAddress)) {
 
                 //display again the addresses view updated with the new address
-                require_once PATH_VIEW . 'addresses.php';
+                header('Location: index.php?module=cart&action=orderTunnel&function=address');
             }
         }
     } else if (isset($_GET['function']) && $_GET['function'] == 'payment') {
 
+//Store the total of the shopping cart for the order summary
+        $_SESSION['toPay'] = 0;
+
+        foreach ($_SESSION['cart_item'] as $item) {
+            $_SESSION['toPay'] += ($item['price'] * $item['quantity']);
+        }
+
+        //Get the model for address
+        require_once PATH_MODEL . 'address.php';
+
+        $addressDelivery = getAddressById($_POST['deliveryAddress']);
+
+        $billingAddress = getAddressById($_POST['billingAddress']);
+
         //Bring the payment page
         require_once PATH_VIEW . 'payment.php';
+
+    } else if (isset($_GET['function']) && $_GET['function'] == 'order') {
+
+        //Get the order model
+        require_once PATH_MODEL . 'order.php';
+
+        $result = addOrder();
+
+        if (ctype_digit($result)) {
+
+            foreach ($_SESSION['cart_item'] as $item) {
+
+                $tabError = array();
+
+                $newOrder = addOrder_product($result, $item['name'], $item['price'], $item['quantity']);
+
+                if (!ctype_digit($newOrder)) {
+                    array_push($newOrder, $tabError);
+                }
+
+                if (empty($tabError)) {
+
+                    require_once PATH_VIEW . 'finalizeOrder.php';
+
+                } else {
+
+                    print_r($tabError);
+                }
+            }
+        }
     }
 }

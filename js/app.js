@@ -1,35 +1,13 @@
 (function () {
     var app = angular.module('store', []);
 
-    var gem = {
-        name: 'Azurite',
-        description: "Some gems have hidden qualities beyond their luster, beyond their shine... Azurite is one of those gems.",
-        shine: 8,
-        price: 110.50,
-        rarity: 7,
-        color: '#CCC',
-        faces: 14,
-        images: [
-            "images/gem-02.gif",
-            "images/gem-05.gif",
-            "images/gem-09.gif"
-        ],
-        reviews: [{
-            stars: 5,
-            body: "I love this gem!",
-            author: "joe@example.org",
-            createdOn: 1397490980837
-        }, {
-            stars: 1,
-            body: "This gem sucks.",
-            author: "tim@example.org",
-            createdOn: 1397490980837
-        }]
-    };
-
-    app.controller('StoreController', function(){
-        this.product = gem;
-    });
+    app.controller('StoreController', ['$http', function ($http) {
+        var store = this;
+        store.products = [];
+        $http.get('./js/store-products.json').success(function (data) {
+            store.products = data;
+        });
+    }]);
 
     app.controller('TabController', function () {
         this.tab = 1;
@@ -43,14 +21,21 @@
         };
     });
 
-    app.controller('ReviewController', function () {
-        this.review = {};
+    app.controller('ReviewController', /*['$http', */function (/*$http*/) {
+        this.comment = {};
+        console.log('prout');
+        //$http.get('./js/store-products.json').success(function(data){
+        //    review.comment = data["comment"];
+        //    console.log(data["comment"]);
+        //});
 
-        this.addReview = function (product) {
-            product.reviews.push(this.review);
+        this.addComment = function (product) {
+            product.comment.push(this.comment);
 
-            this.review = {};
+            console.log('prout');
+
+            product.comment = {};
         };
-    });
+    }/*]*/);
 
 })();

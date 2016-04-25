@@ -14,22 +14,19 @@ if (!adminUser()) {
 //We first get all the categories available to add a product
     $cat = getCategories();
 
-//Load the form to add product
-    require_once PATH_VIEW . 'add_product.php';
-
 //Get all the current products
     $allProducts = getAllProducts();
 
-//List them
-    require_once PATH_VIEW . 'list_products.php';
+//Load the form to add product
+    require_once PATH_VIEW . 'add_product.php';
 
-    if (!empty($_POST['product_name']) && !empty($_POST['quantity']) && !empty($_POST['category']) && !empty($_POST['picture']) && !empty($_POST['description'])) {
+    if (!empty($_POST['price']) && !empty($_POST['product_name']) && !empty($_POST['quantity']) && !empty($_POST['category']) && !empty($_POST['picture']) && !empty($_POST['description'])) {
 
         $tabErrors = array();
 
         if (!empty($_POST)) {
 
-            //Je vérifie que tout est saisi correctement
+            //Check if every field is valid
             if (empty($_POST['product_name'])) {
                 $tabErrors[] = "name";
             }
@@ -45,6 +42,9 @@ if (!adminUser()) {
             if (empty($_POST['description'])) {
                 $tabErrors[] = "description";
             }
+            if (empty($_POST['price'])) {
+                $tabErrors[] = "price";
+            }
         }
 
         //Secure the variables
@@ -52,24 +52,24 @@ if (!adminUser()) {
         $quantity = htmlspecialchars($_POST['quantity']);
         $category = intval($_POST['category'][0]);
         $picture = htmlspecialchars($_POST['picture']);
+        $price = floatval($_POST['price']);
         $description = htmlspecialchars($_POST['description']);
 
         if (empty($tabErrors)) {
 
             //Insertion in the database
-            $newProduct = addProduct($name, $quantity, $category, $picture, $description);
+            $newProduct = addProduct($name, $quantity, $category, $picture, $description, $price);
 
             //If the database has added the new product
             if (ctype_digit($newProduct)) {
 
-                //List them
-                require_once PATH_VIEW . 'list_products.php';
+                //Update the page
+                header('Location: index.php?module=backOffice&action=add_product');
 
             } else {
                 print_r($newProduct[2]);
             }
         }
-
     } else {
         if (!empty($_POST)) {
             echo 'Please, fill all the fields !';

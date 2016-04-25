@@ -1,15 +1,24 @@
 <?php
 
-
-if (isset($_POST['title']) && isset($_POST['author']) && isset($_POST['comment'])) {
+if (isset($_POST['rating']) && isset($_POST['comment']) && isset($_POST['author'])) {
 
     //Sécure the posts
-    $titre = htmlspecialchars($_POST['title']);
-    $auteur = htmlspecialchars($_POST['author']);
-    $texte = htmlspecialchars($_POST['comment']);
+    $mark = htmlspecialchars($_POST['rating']);
+    $comment = htmlspecialchars($_POST['comment']);
+    $idProduct = intval($_GET['id_product']);
+    $author = htmlspecialchars($_POST['author']);
 
-    var_dump($_POST);
+    //Add the model path
+    require_once PATH_MODEL . 'comments.php';
 
-    //Send to the view
-//    header('Location: index.php?module=product&action=see_product&id_product=' . $_GET['id_product']);
+    //$request = addComment($_SESSION['id'], $idProduct, $mark, $comment, $author);
+
+    //if (ctype_digit($request)) {
+
+        //Send to the view
+//        header('Location: index.php?module=product&action=see_product&id_product=' . $_GET['id_product']);
+//    } else {
+//        echo 'error';
+//    }
+
 }

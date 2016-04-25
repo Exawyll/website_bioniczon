@@ -2,7 +2,6 @@
 
 function updateUserAvatar($idUser, $avatar)
 {
-
     $pdo = PDO2::getInstance();
 
     $query = $pdo->prepare("UPDATE user SET
@@ -86,7 +85,8 @@ function getAllUsers()
     return $query->fetchAll();
 }
 
-function turnUserAdmin($idUser) {
+function turnUserAdmin($idUser)
+{
     $pdo = PDO2::getInstance();
 
     $query = $pdo->prepare("UPDATE user SET admin=1 WHERE id=:id");
@@ -96,12 +96,40 @@ function turnUserAdmin($idUser) {
     return $query->execute();
 }
 
-function turnUserNotAdmin($idUser) {
+function turnUserNotAdmin($idUser)
+{
     $pdo = PDO2::getInstance();
 
     $query = $pdo->prepare("UPDATE user SET admin=0 WHERE id=:id");
 
     $query->bindValue(':id', $idUser);
+
+    return $query->execute();
+}
+
+//Master delete user
+function deleteUser($idUser)
+{
+    $pdo = PDO2::getInstance();
+
+    $query = $pdo->prepare("DELETE FROM address WHERE id_user=:id");
+    $query->bindValue(':id', $idUser);
+    var_dump($query);
+    $query->execute();
+
+    $query = $pdo->prepare("DELETE FROM comments WHERE id_user=:id");
+    $query->bindValue(':id', $idUser);
+    var_dump($query);
+    $query->execute();
+
+    $query = $pdo->prepare("DELETE FROM orders WHERE id_user=:id");
+    $query->bindValue(':id', $idUser);
+    var_dump($query);
+    $query->execute();
+
+    $query = $pdo->prepare("DELETE FROM user WHERE id=:id");
+    $query->bindValue(':id', $idUser);
+    var_dump($query);
 
     return $query->execute();
 }

@@ -1,5 +1,5 @@
 .header {
-    background-color: #3c3c3c;
+    background-color: #333745;
     color: #a6e1ec;
     letter-spacing: 3px;
     margin-top: 0px;
@@ -11,38 +11,61 @@
 }
 
 .header__nav {
-    color: #3c3c3c;
-    font-family: Impact, 'KaushanScript-Regular', Arial, serif;
+    color: #333745;
     font-size: 1.1em;
     font-weight: bold;
-    line-height: 1.0em;
     overflow: hidden;
+    padding: 1em 1em;
     text-align: center;
     text-transform: uppercase;
     width: 100%;
 }
 
 .header__nav--link1 {
+        /*#a6e1ec*/
     background-color: #a6e1ec;
     border-radius: 5px 0px 0px 0px;
-    line-height: 2.0em;
+    line-height: 2.5em;
     overflow: hidden;
 }
 
 .header__nav--link2 {
     background-color: #a6e1ec;
     border-radius: 0px 0px 5px 0px;
-    line-height: 2.0em;
+    line-height: 2.5em;
     overflow: hidden;
 }
 
-.header__nav--link:hover {
-}
-
 nav a:hover {
-    background-color: rgba(255,56,69,0.7);
+    background-color: #EA2E49;
     /*border-radius: 20px;*/
     display: inline-block;
     transform: scale(1.1);
     transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+
+.menu {
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+}
+
+.submenu {
+    font-style: oblique;
+}
+
+.menu .menu {
+    display: none;
+}
+
+.menu li:hover .menu, .menu li {
+    display: inline-block;
+    position: relative;
+    z-index:99999;
+}
+
+.admin {
+    color: #a6e1ec;
+    display: inline-block;
+    margin-top: 1em;
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 function getProductByCategory($idCategory)
 {
     $pdo = PDO2::getInstance();
@@ -53,7 +52,7 @@ function getAllProducts()
     return $result;
 }
 
-function addProduct($productName, $quantity, $category, $picture, $description)
+function addProduct($productName, $quantity, $category, $picture, $description, $price)
 {
     $pdo = PDO2::getInstance();
 
@@ -62,17 +61,45 @@ function addProduct($productName, $quantity, $category, $picture, $description)
               quantity = :quantity,
               id_category = :id_category,
               picture = :picture,
-              description = :description");
+              description = :description,
+              price = :price");
 
     $query->bindValue(':name', $productName);
     $query->bindValue(':quantity', $quantity);
     $query->bindValue(':id_category', $category);
     $query->bindValue(':picture', $picture);
     $query->bindValue(':description', $description);
+    $query->bindValue(':price', $price);
 
     if ($query->execute()) {
 
         return $pdo->lastInsertId();
     }
     return $query->errorInfo();
+}
+
+function updateQuantity($idProduct, $quantity)
+{
+    $pdo = PDO2::getInstance();
+
+    $query = $pdo->prepare("UPDATE product SET
+		quantity = :quantity
+		WHERE
+		id = :idProduct");
+
+    $query->bindValue(':quantity', $quantity);
+    $query->bindValue(':idProduct', $idProduct);
+
+    return $query->execute();
+}
+
+function deleteProduct($idProduct)
+{
+    $pdo = PDO2::getInstance();
+
+    $query = $pdo->prepare("DELETE FROM product WHERE id=:id_product");
+
+    $query->bindValue(':id_product', $idProduct);
+
+    return $query->execute();
 }

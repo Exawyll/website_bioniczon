@@ -11,32 +11,43 @@ if (!adminUser()) {
 
     $users = getAllUsers();
 
-    //Display the list aof users
-    require_once PATH_VIEW . 'listUser.php';
-
-    if (!empty($_POST['idUser'])) {
+    if (!empty($_GET['idUser']) && empty($_GET['function'])) {
 
         //we want to turn the user as admin
         require_once PATH_MODEL . 'membres.php';
 
+        $user = infoUser($_GET['idUser']);
+
         if ($user['admin'] == 1) {
 
-            $result = turnUserNotAdmin($_POST['idUser']);
+            $result = turnUserNotAdmin($_GET['idUser']);
         } else {
 
-            $result = turnUserAdmin($_POST['idUser']);
+            $result = turnUserAdmin($_GET['idUser']);
         }
 
         if ($result) {
 
-            $users = getAllUsers();
-
             //Display the list updated
-            require_once PATH_VIEW . 'listUser.php';
+            header('Location: index.php?module=backOffice&action=listUser');
 
         } else {
 
             echo 'You can\'t do that';
         }
+    } else if (isset($_GET['idUser']) && $_GET['function'] == 'remove') {
+
+        // Database membres
+        require_once PATH_MODEL . 'membres.php';
+
+        //Delete User
+        deleteUser(intval($_GET['idUser']));
+
+        //Display the list updated
+        header('Location: index.php?module=backOffice&action=listUser');
+    } else {
+
+        //Display the list aof users
+        require_once PATH_VIEW . 'listUser.php';
     }
 }
