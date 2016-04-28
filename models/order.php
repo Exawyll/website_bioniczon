@@ -1,84 +1,85 @@
 <?php
 
-function getUserAddress($idUser)
+/**
+ * Class Model_Order
+ */
+class Model_Order
 {
-    $pdo = PDO2::getInstance();
+    /**
+     * @var PDO
+     */
+    private $db;
 
-    $query = $pdo->prepare("SELECT * FROM address WHERE
-        id_user = :id_user;");
-
-    $query->bindValue(':id_user', $idUser);
-
-    $query->execute();
-
-    $result = $query->fetchAll();
-
-    return $result;
-}
-
-function addUserAddress($idUser, $city, $number, $postalCode, $streetName, $firstName, $lastName)
-{
-    $pdo = PDO2::getInstance();
-
-    $query = $pdo->prepare("INSERT INTO address SET
-        id_user = :id_user,
-        city = :city,
-        num = :num,
-        postalCode = :postalCode,
-        streetName = :streetName,
-        firstname = :firstName,
-        lastname = :lastName");
-
-    $query->bindValue(':id_user', $idUser);
-    $query->bindValue(':city', $city);
-    $query->bindValue(':num', $number);
-    $query->bindValue(':postalCode', $postalCode);
-    $query->bindValue(':streetName', $streetName);
-    $query->bindValue(':firstName', $firstName);
-    $query->bindValue(':lastName', $lastName);
-
-    if ($query->execute()) {
-
-        return $pdo->lastInsertId();
+    /**
+     * Model_Order constructor.
+     */
+    public function __construct()
+    {
+        $this->db = PDO2::getInstance();
     }
-    return $query->errorInfo();
-}
 
-function addOrder()
-{
-    $pdo = PDO2::getInstance();
-
-    $query = $pdo->prepare("INSERT INTO orders SET
+    /**
+     * @return array|string
+     */
+    function addOrder()
+    {
+        $query = $this->db->prepare("INSERT INTO orders SET
       id_user = :id_user,
       dateOrder = NOW(),
       dateDelivery = NOW() + INTERVAL 2 DAY");
 
-    $query->bindValue(':id_user', $_SESSION['id']);
+        $query->bindValue(':id_user', $_SESSION['id']);
 
-    if ($query->execute()) {
+        if ($query->execute()) {
 
-        return $pdo->lastInsertId();
+            return $this->db->lastInsertId();
+        }
+        return $query->errorInfo();
     }
-    return $query->errorInfo();
-}
 
-function addOrder_product($idOrder, $nameProduct, $price, $quantity) {
-    $pdo = PDO2::getInstance();
-
-    $query = $pdo->prepare("INSERT INTO order_product SET
+    /**
+     * @param $idOrder
+     * @param $nameProduct
+     * @param $price
+     * @param $quantity
+     * @return array|string
+     */
+    function addOrder_product($idOrder, $nameProduct, $price, $quantity)
+    {
+        $query = $this->db->prepare("INSERT INTO order_product SET
       id_orders = :id_orders,
       nameProduct = :nameProduct,
       price = :price,
       quantity = :quantity");
 
-    $query->bindValue(':id_orders', $idOrder);
-    $query->bindValue(':nameProduct', $nameProduct);
-    $query->bindValue(':price', $price);
-    $query->bindValue(':quantity', $quantity);
+        $query->bindValue(':id_orders', $idOrder);
+        $query->bindValue(':nameProduct', $nameProduct);
+        $query->bindValue(':price', $price);
+        $query->bindValue(':quantity', $quantity);
 
-    if ($query->execute()) {
+        if ($query->execute()) {
 
-        return $pdo->lastInsertId();
+            return $this->db->lastInsertId();
+        }
+        return $query->errorInfo();
     }
-    return $query->errorInfo();
+
+    /**
+     * @param $idUser
+     * @return array|bool
+     */
+    function getOrderByUser($idUser)
+    {
+        $query = $this->db->prepare("SELECT * FROM orders INNER JOIN order_product ON orders.id = order_product.id_orders
+          WHERE orders.id_user = :id_user");
+
+        $query->bindValue(':id_user', $idUser);
+        $query->execute();
+
+        if ($result = $query->fetchAll()) {
+            $query->closeCursor();
+            return $result;
+        }
+        return false;
+    }
 }

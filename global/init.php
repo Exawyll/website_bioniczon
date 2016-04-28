@@ -6,12 +6,6 @@ require_once 'global/config.php';
 // Start the session
 session_start();
 
-// Lib for the class cart
-require_once PATH_LIB . 'cart.php';
-
-// New instance of a shopping Cart
-$myCart = new Cart();
-
 // Singleton PDO2 to connect the DB from anywhere
 require_once PATH_LIB.'pdo2.php';
 

@@ -39,20 +39,21 @@ if (userSignedIn()) {
         // On veut utiliser le modèle des membres (~/models/membres.php)
         require_once PATH_MODEL . 'membres.php';
 
+        $modelUser = new Model_Users();
+
         // combinaison_connexion_valide() est définit dans ~/models/membres.php
-        $idUser = validateSignIn($login, sha1($password));
+        $idUser = $modelUser->validateSignIn($login, sha1($password));
 
         // Si les identifiants sont valides
         if (ctype_digit($idUser)) {
 
-            $userInfo = infoUser($idUser);
+            $userInfo = $modelUser->infoUser($idUser);
 
             // On enregistre les informations dans la session
             $_SESSION['id'] = $idUser;
             $_SESSION['login'] = $userInfo['login'];
             $_SESSION['firstname'] = $userInfo['firstname'];
             $_SESSION['lastname'] = $userInfo['lastname'];
-            $_SESSION['avatar'] = $userInfo['avatar'];
             $_SESSION['email'] = $userInfo['email'];
             $_SESSION['admin'] = $userInfo['admin'];
 

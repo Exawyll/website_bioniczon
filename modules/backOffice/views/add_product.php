@@ -18,7 +18,7 @@
                 </div>
                 <div class="form-group">
                     <label for="category">Category</label>
-                    <select class="form-control" name="category">
+                    <select class="form-control" id="category" name="category">
                         <?php foreach ($cat as $option) {
                             echo '<option>' . $option[0] . " - " . $option[1] . '</option>';
                         } ?>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Product description</label>
-                    <textarea class="form-control" name="description" id="exampleTextarea" rows="3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim laborum maxime molestiae qui voluptatem. Aliquid fugiat in ipsam repudiandae. Autem cum delectus, dolor dolorem eaque incidunt magnam quae reiciendis repudiandae?</textarea>
+                    <textarea class="form-control" name="description" id="description" rows="3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim laborum maxime molestiae qui voluptatem. Aliquid fugiat in ipsam repudiandae. Autem cum delectus, dolor dolorem eaque incidunt magnam quae reiciendis repudiandae?</textarea>
                 </div>
 
                 <button type="submit" class="btn">Submit</button>

@@ -10,12 +10,13 @@ if (!adminUser()) {
 
 //On appel le model pour les produits
     require_once PATH_MODEL . 'product.php';
+    $modelProduct = new Model_Products();
 
 //We first get all the categories available to add a product
-    $cat = getCategories();
+    $cat = $modelProduct->getCategories();
 
 //Get all the current products
-    $allProducts = getAllProducts();
+    $allProducts = $modelProduct->getAllProducts();
 
 //Load the form to add product
     require_once PATH_VIEW . 'add_product.php';
@@ -58,7 +59,7 @@ if (!adminUser()) {
         if (empty($tabErrors)) {
 
             //Insertion in the database
-            $newProduct = addProduct($name, $quantity, $category, $picture, $description, $price);
+            $newProduct = $modelProduct->addProduct($name, $quantity, $category, $picture, $description, $price);
 
             //If the database has added the new product
             if (ctype_digit($newProduct)) {

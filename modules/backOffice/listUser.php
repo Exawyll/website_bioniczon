@@ -8,22 +8,20 @@ if (!adminUser()) {
 
     //Model for membres
     require_once PATH_MODEL . 'membres.php';
+    $modelUser = new Model_Users();
 
-    $users = getAllUsers();
+    $users = $modelUser->getAllUsers();
 
     if (!empty($_GET['idUser']) && empty($_GET['function'])) {
 
-        //we want to turn the user as admin
-        require_once PATH_MODEL . 'membres.php';
-
-        $user = infoUser($_GET['idUser']);
+        $user = $modelUser->infoUser($_GET['idUser']);
 
         if ($user['admin'] == 1) {
 
-            $result = turnUserNotAdmin($_GET['idUser']);
+            $result = $modelUser->turnUserNotAdmin($_GET['idUser']);
         } else {
 
-            $result = turnUserAdmin($_GET['idUser']);
+            $result = $modelUser->turnUserAdmin($_GET['idUser']);
         }
 
         if ($result) {
@@ -37,11 +35,8 @@ if (!adminUser()) {
         }
     } else if (isset($_GET['idUser']) && $_GET['function'] == 'remove') {
 
-        // Database membres
-        require_once PATH_MODEL . 'membres.php';
-
         //Delete User
-        deleteUser(intval($_GET['idUser']));
+        $modelUser->deleteUser(intval($_GET['idUser']));
 
         //Display the list updated
         header('Location: index.php?module=backOffice&action=listUser');

@@ -4,6 +4,7 @@
         <div class="col-lg-5">
 
             <h2>New address</h2>
+
             <?php echo $formAddress; ?>
 
         </div>
@@ -13,9 +14,13 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-6 col-sm-6 col-xs-12">
+
+                        <?php if (!empty($userAddress)) { ?>
+
                         <h2>Your delivery address(es)</h2>
 
                         <form method="POST" action="index.php?module=cart&amp;action=orderTunnel&amp;function=payment">
+
                             <?php foreach ($userAddress as $address) { ?>
 
                                 <div class="radio">
@@ -54,10 +59,13 @@
 
 
             <br>
+
             <div style="float: right">
 
                 <button type="submit" class="btn btn-primary">Next <img src="/ecommerce/images/order.png"
-                                                                           alt="order"></button>
+                                                                        alt="order"></button>
+
+                <?php } ?>
 
                 </form>
 

@@ -1,62 +1,95 @@
 <?php
 
-function getProductByCategory($idCategory)
+/**
+ * Class Model_Products
+ */
+class Model_Products
 {
-    $pdo = PDO2::getInstance();
+    /**
+     * @var PDO
+     */
+    private $db;
 
-    $query = $pdo->prepare("SELECT * FROM product WHERE id_category = :id_category");
+    /**
+     * Model_Products constructor.
+     */
+    public function __construct()
+    {
+        $this->db = PDO2::getInstance();
+    }
 
-    $query->bindValue(':id_category', $idCategory);
-    $query->execute();
+    /**
+     * @param $idCategory
+     * @return array|bool
+     */
+    function getProductByCategory($idCategory)
+    {
+        $query = $this->db->prepare("SELECT * FROM product WHERE id_category = :id_category");
 
-    if ($result = $query->fetchAll()) {
-        $query->closeCursor();
+        $query->bindValue(':id_category', $idCategory);
+        $query->execute();
+
+        if ($result = $query->fetchAll()) {
+            $query->closeCursor();
+            return $result;
+        }
+        return false;
+    }
+
+    /**
+     * @param $idProduct
+     * @return bool|mixed
+     */
+    function getProductById($idProduct)
+    {
+        $query = $this->db->prepare("SELECT * FROM product WHERE id = :id_product");
+
+        $query->bindValue(':id_product', $idProduct);
+        $query->execute();
+
+        if ($result = $query->fetch()) {
+            $query->closeCursor();
+            return $result;
+        }
+        return false;
+    }
+
+    /**
+     * @return array
+     */
+    function getCategories()
+    {
+        $query = $this->db->prepare("SELECT * FROM category");
+        $query->execute();
+        $result = $query->fetchAll();
         return $result;
     }
-    return false;
-}
 
-function getProductById($idProduct)
-{
-    $pdo = PDO2::getInstance();
+    /**
+     * @return array
+     */
+    function getAllProducts()
+    {
+        $this->db = PDO2::getInstance();
 
-    $query = $pdo->prepare("SELECT * FROM product WHERE id = :id_product");
-
-    $query->bindValue(':id_product', $idProduct);
-    $query->execute();
-
-    if ($result = $query->fetch()) {
-        $query->closeCursor();
+        $query = $this->db->prepare("SELECT * FROM product");
+        $query->execute();
+        $result = $query->fetchAll();
         return $result;
     }
-    return false;
-}
 
-function getCategories()
-{
-    $pdo = PDO2::getInstance();
-
-    $query = $pdo->prepare("SELECT * FROM category");
-    $query->execute();
-    $result = $query->fetchAll();
-    return $result;
-}
-
-function getAllProducts()
-{
-    $pdo = PDO2::getInstance();
-
-    $query = $pdo->prepare("SELECT * FROM product");
-    $query->execute();
-    $result = $query->fetchAll();
-    return $result;
-}
-
-function addProduct($productName, $quantity, $category, $picture, $description, $price)
-{
-    $pdo = PDO2::getInstance();
-
-    $query = $pdo->prepare("INSERT INTO product SET
+    /**
+     * @param $productName
+     * @param $quantity
+     * @param $category
+     * @param $picture
+     * @param $description
+     * @param $price
+     * @return array|string
+     */
+    function addProduct($productName, $quantity, $category, $picture, $description, $price)
+    {
+        $query = $this->db->prepare("INSERT INTO product SET
               name = :name,
               quantity = :quantity,
               id_category = :id_category,
@@ -64,42 +97,48 @@ function addProduct($productName, $quantity, $category, $picture, $description, 
               description = :description,
               price = :price");
 
-    $query->bindValue(':name', $productName);
-    $query->bindValue(':quantity', $quantity);
-    $query->bindValue(':id_category', $category);
-    $query->bindValue(':picture', $picture);
-    $query->bindValue(':description', $description);
-    $query->bindValue(':price', $price);
+        $query->bindValue(':name', $productName);
+        $query->bindValue(':quantity', $quantity);
+        $query->bindValue(':id_category', $category);
+        $query->bindValue(':picture', $picture);
+        $query->bindValue(':description', $description);
+        $query->bindValue(':price', $price);
 
-    if ($query->execute()) {
+        if ($query->execute()) {
 
-        return $pdo->lastInsertId();
+            return $this->db->lastInsertId();
+        }
+        return $query->errorInfo();
     }
-    return $query->errorInfo();
-}
 
-function updateQuantity($idProduct, $quantity)
-{
-    $pdo = PDO2::getInstance();
-
-    $query = $pdo->prepare("UPDATE product SET
+    /**
+     * @param $idProduct
+     * @param $quantity
+     * @return bool
+     */
+    function updateQuantity($idProduct, $quantity)
+    {
+        $query = $this->db->prepare("UPDATE product SET
 		quantity = :quantity
 		WHERE
 		id = :idProduct");
 
-    $query->bindValue(':quantity', $quantity);
-    $query->bindValue(':idProduct', $idProduct);
+        $query->bindValue(':quantity', $quantity);
+        $query->bindValue(':idProduct', $idProduct);
 
-    return $query->execute();
-}
+        return $query->execute();
+    }
 
-function deleteProduct($idProduct)
-{
-    $pdo = PDO2::getInstance();
+    /**
+     * @param $idProduct
+     * @return bool
+     */
+    function deleteProduct($idProduct)
+    {
+        $query = $this->db->prepare("DELETE FROM product WHERE id=:id_product");
 
-    $query = $pdo->prepare("DELETE FROM product WHERE id=:id_product");
+        $query->bindValue(':id_product', $idProduct);
 
-    $query->bindValue(':id_product', $idProduct);
-
-    return $query->execute();
+        return $query->execute();
+    }
 }

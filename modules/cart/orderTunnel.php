@@ -1,5 +1,9 @@
 <?php
 
+//Get the model to access DB
+require_once PATH_MODEL . 'address.php';
+$modelAddress = new Model_Address();
+
 if (!userSignedIn()) {
 
     // On affiche la page d'erreur comme quoi l'utilisateur doit être connecté pour voir la page
@@ -8,10 +12,7 @@ if (!userSignedIn()) {
 } else {
     if (isset($_GET['function']) && $_GET['function'] == 'address') {
 
-        //Get the model to access DB
-        require_once PATH_MODEL . 'order.php';
-
-        $userAddress = getUserAddress(intval($_SESSION['id']));
+        $userAddress = $modelAddress->getAddressByUser(intval($_SESSION['id']));
 
         // Ne pas oublier d'inclure la librairie Form
         require_once PATH_LIB . 'form.php';
@@ -51,17 +52,21 @@ if (!userSignedIn()) {
 
             $idUser = $_SESSION['id'];
 
+            var_dump($idUser);
+
             //List the data before insertion in the DB
             list($city, $number, $postalCode, $streetName, $firstName, $lastName) =
                 $formAddress->get_cleaned_data('city', 'number', 'zipcode', 'street', 'firstname', 'lastname');
 
             //Call the function to insert a new address
-            $newAddress = addUserAddress(intval($idUser), $city, intval($number), intval($postalCode), $streetName, $firstName, $lastName);
-
+            $newAddress = $modelAddress->addUserAddress(intval($idUser), $city, intval($number), intval($postalCode), $streetName, $firstName, $lastName);
+            var_dump($newAddress);
             if (ctype_digit($newAddress)) {
 
                 //display again the addresses view updated with the new address
                 header('Location: index.php?module=cart&action=orderTunnel&function=address');
+            } else {
+                echo "error, the address can't be added !";
             }
         }
     } else if (isset($_GET['function']) && $_GET['function'] == 'payment') {
@@ -73,12 +78,9 @@ if (!userSignedIn()) {
             $_SESSION['toPay'] += ($item['price'] * $item['quantity']);
         }
 
-        //Get the model for address
-        require_once PATH_MODEL . 'address.php';
+        $addressDelivery = $modelAddress->getAddressById($_POST['deliveryAddress']);
 
-        $addressDelivery = getAddressById($_POST['deliveryAddress']);
-
-        $billingAddress = getAddressById($_POST['billingAddress']);
+        $billingAddress = $modelAddress->getAddressById($_POST['billingAddress']);
 
         //Bring the payment page
         require_once PATH_VIEW . 'payment.php';
@@ -87,8 +89,9 @@ if (!userSignedIn()) {
 
         //Get the order model
         require_once PATH_MODEL . 'order.php';
+        $modelOrder = new Model_Order();
 
-        $result = addOrder();
+        $result = $modelOrder->addOrder();
 
         if (ctype_digit($result)) {
 
@@ -96,7 +99,7 @@ if (!userSignedIn()) {
 
                 $tabError = array();
 
-                $newOrder = addOrder_product($result, $item['name'], $item['price'], $item['quantity']);
+                $newOrder = $modelOrder->addOrder_product($result, $item['name'], $item['price'], $item['quantity']);
 
                 if (!ctype_digit($newOrder)) {
                     array_push($newOrder, $tabError);

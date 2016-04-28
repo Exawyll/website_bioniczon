@@ -1,135 +1,188 @@
 <?php
 
-function updateUserAvatar($idUser, $avatar)
+/**
+ * Class Model_Users
+ */
+class Model_Users
 {
-    $pdo = PDO2::getInstance();
+    private $db;
 
-    $query = $pdo->prepare("UPDATE user SET
-		avatar = :avatar
-		WHERE
-		id = :id");
+    /**
+     * Model_membres constructor.
+     */
+    public function __construct()
+    {
+        $this->db = PDO2::getInstance();;
+    }
 
-    $query->bindValue(':id', $idUser);
-    $query->bindValue(':avatar', $avatar);
+    /**
+     * @param $firstname
+     * @param $lastname
+     * @param $login
+     * @param $mdp
+     * @param $email
+     * @return array|string
+     */
+    function addUserInDB($firstname, $lastname, $login, $mdp, $email)
+    {
+        $query = $this->db->prepare("INSERT INTO user SET
+		firstname = :firstname,
+		lastname = :lastname,
+		login = :login,
+		password = :password,
+		email = :email,
+		registerDate = NOW(),
+		admin = 0");
 
-    return $query->execute();
-}
+        $query->bindValue(':firstname', $firstname);
+        $query->bindValue(':lastname', $lastname);
+        $query->bindValue(':login', $login);
+        $query->bindValue(':password', $mdp);
+        $query->bindValue(':email', $email);
 
-/*function validateAccountFromHash($validateHash) {
+        if ($query->execute()) {
 
-    $pdo = PDO2::getInstance();
+            return $this->db->lastInsertId();
+        }
+        return $query->errorInfo();
+    }
 
-    $query = $pdo->prepare("UPDATE user SET
-		validateHash = ''
-		WHERE
-		validateHash = :validateHash");
+    /**
+     * @param $firstname
+     * @param $lastname
+     * @param $login
+     * @param $mdp
+     * @param $email
+     * @return string
+     */
+    function updateUserInDB($firstname, $lastname, $login, $mdp, $email)
+    {
+        $query = $this->db->prepare("REPLACE INTO user SET
+		firstname = :firstname,
+		lastname = :lastname,
+		login = :login,
+		password = :password,
+		email = :email,
+		registerDate = NOW()");
 
-    $query->bindValue(':validateHash', $validateHash);
+        $query->bindValue(':firstname', $firstname);
+        $query->bindValue(':lastname', $lastname);
+        $query->bindValue(':login', $login);
+        $query->bindValue(':password', $mdp);
+        $query->bindValue(':email', $email);
 
-    $query->execute();
+        if ($query->execute()) {
+            return true;
+        } else {
+            return $query->errorInfo();
+        }
+    }
 
-    return ($query->rowCount() == 1);
-}*/
-
-function validateSignIn($login, $password)
-{
-
-    $pdo = PDO2::getInstance();
-
-    $query = $pdo->prepare("SELECT id FROM user
+    /**
+     * @param $login
+     * @param $password
+     * @return bool
+     */
+    function validateSignIn($login, $password)
+    {
+        $query = $this->db->prepare("SELECT id FROM user
 		WHERE
 		login = :login AND
 		password = :password");
 
-    $query->bindValue(':login', $login);
-    $query->bindValue(':password', $password);
-    $query->execute();
+        $query->bindValue(':login', $login);
+        $query->bindValue(':password', $password);
+        $query->execute();
 
-    if ($result = $query->fetch(PDO::FETCH_ASSOC)) {
+        if ($result = $query->fetch(PDO::FETCH_ASSOC)) {
 
-        $query->closeCursor();
-        return $result['id'];
+            $query->closeCursor();
+            return $result['id'];
+        }
+        return false;
     }
-    return false;
-}
 
-function infoUser($idUser)
-{
-
-    $pdo = PDO2::getInstance();
-
-    $query = $pdo->prepare("SELECT firstname, lastname, login, password, email, avatar, registerDate, admin
+    /**
+     * @param $idUser
+     * @return bool|mixed
+     */
+    function infoUser($idUser)
+    {
+        $query = $this->db->prepare("SELECT firstname, lastname, login, password, email, registerDate, admin
 		FROM user
 		WHERE
 		id = :id");
 
-    $query->bindValue(':id', $idUser);
-    $query->execute();
+        $query->bindValue(':id', $idUser);
+        $query->execute();
 
-    if ($result = $query->fetch(PDO::FETCH_ASSOC)) {
+        if ($result = $query->fetch(PDO::FETCH_ASSOC)) {
 
-        $query->closeCursor();
-        return $result;
+            $query->closeCursor();
+            return $result;
+        }
+        return false;
     }
-    return false;
-}
 
-function getAllUsers()
-{
-    $pdo = PDO2::getInstance();
+    /**
+     * @return array
+     */
+    function getAllUsers()
+    {
+        $query = $this->db->prepare("SELECT * from user");
 
-    $query = $pdo->prepare("SELECT * from user");
+        $query->execute();
 
-    $query->execute();
+        return $query->fetchAll();
+    }
 
-    return $query->fetchAll();
-}
+    /**
+     * @param $idUser
+     * @return bool
+     */
+    function turnUserAdmin($idUser)
+    {
+        $query = $this->db->prepare("UPDATE user SET admin=1 WHERE id=:id");
 
-function turnUserAdmin($idUser)
-{
-    $pdo = PDO2::getInstance();
+        $query->bindValue(':id', $idUser);
 
-    $query = $pdo->prepare("UPDATE user SET admin=1 WHERE id=:id");
+        return $query->execute();
+    }
 
-    $query->bindValue(':id', $idUser);
+    /**
+     * @param $idUser
+     * @return bool
+     */
+    function turnUserNotAdmin($idUser)
+    {
+        $query = $this->db->prepare("UPDATE user SET admin=0 WHERE id=:id");
 
-    return $query->execute();
-}
+        $query->bindValue(':id', $idUser);
 
-function turnUserNotAdmin($idUser)
-{
-    $pdo = PDO2::getInstance();
+        return $query->execute();
+    }
 
-    $query = $pdo->prepare("UPDATE user SET admin=0 WHERE id=:id");
+    /**
+     * @param $idUser
+     * @return bool
+     */
+    function deleteUser($idUser)
+    {
+        $query = $this->db->prepare("DELETE FROM address WHERE id_user=:id");
+        $query->bindValue(':id', $idUser);
+        $query->execute();
 
-    $query->bindValue(':id', $idUser);
+        $query = $this->db->prepare("DELETE FROM comments WHERE id_user=:id");
+        $query->bindValue(':id', $idUser);
+        $query->execute();
 
-    return $query->execute();
-}
+        $query = $this->db->prepare("DELETE FROM orders WHERE id_user=:id");
+        $query->bindValue(':id', $idUser);
+        $query->execute();
 
-//Master delete user
-function deleteUser($idUser)
-{
-    $pdo = PDO2::getInstance();
+        $query = $this->db->prepare("DELETE FROM user WHERE id=:id");
+        $query->bindValue(':id', $idUser);
 
-    $query = $pdo->prepare("DELETE FROM address WHERE id_user=:id");
-    $query->bindValue(':id', $idUser);
-    var_dump($query);
-    $query->execute();
-
-    $query = $pdo->prepare("DELETE FROM comments WHERE id_user=:id");
-    $query->bindValue(':id', $idUser);
-    var_dump($query);
-    $query->execute();
-
-    $query = $pdo->prepare("DELETE FROM orders WHERE id_user=:id");
-    $query->bindValue(':id', $idUser);
-    var_dump($query);
-    $query->execute();
-
-    $query = $pdo->prepare("DELETE FROM user WHERE id=:id");
-    $query->bindValue(':id', $idUser);
-    var_dump($query);
-
-    return $query->execute();
+        return $query->execute();
+    }
 }

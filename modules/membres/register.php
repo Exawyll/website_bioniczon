@@ -34,12 +34,6 @@ if (userSignedIn()) {
     $formSignUp->add('Email', 'email')
         ->label("Email address");
 
-    $formSignUp->add('File', 'avatar')
-        ->filter_extensions('jpg', 'png', 'gif')
-        ->max_size(8192)// 8 Kb
-        ->label("Your avatar (optional)")
-        ->Required(false);
-
     $formSignUp->add('Submit', 'submit')
         ->value("Register");
 
@@ -59,67 +53,29 @@ if (userSignedIn()) {
         }
 
         // Tentative d'ajout du membre dans la base de donnees
-        list($firstname, $lastname, $login, $password, $email, $avatar) =
-            $formSignUp->get_cleaned_data('firstname', 'lastname', 'login', 'password', 'email', 'avatar');
+        list($firstname, $lastname, $login, $password, $email) =
+            $formSignUp->get_cleaned_data('firstname', 'lastname', 'login', 'password', 'email');
 
         // On veut utiliser le modele de l'inscription (~/models/register.php)
-        require_once PATH_MODEL . 'register.php';
+        require_once PATH_MODEL . 'membres.php';
+        $modelUser = new Model_Users();
 
         // ajouter_membre_dans_bdd() est défini dans ~/models/register.php
-        $idUser = addUserInDB($firstname, $lastname, $login, sha1($password), $email);
+        $idUser = $modelUser->addUserInDB($firstname, $lastname, $login, sha1($password), $email);
 
         // Si la base de données a bien voulu ajouter l'utilisateur (pas de doublons)
         if (ctype_digit($idUser)) {
 
-            // Redimensionnement et sauvegarde de l'avatar (eventuel) dans le bon dossier
-            if (!empty($avatar)) {
-
-                // On souhaite utiliser la librairie Image
-                require_once PATH_LIB . 'image.php';
-
-                // Redimensionnement et sauvegarde de l'avatar
-                $avatar = new Image($avatar);
-                $avatar->resize_to(AVATAR_LARGEUR_MAXI, AVATAR_HAUTEUR_MAXI); // Image->resize_to($largeur_maxi, $hauteur_maxi)
-                $avatar_filename = DOSSIER_AVATAR . $idUser . '.' . strtolower(pathinfo($avatar->get_filename(), PATHINFO_EXTENSION));
-                $avatar->save_as($avatar_filename);
-
-                // On veut utiliser le modele des membres (~/models/membres.php)
-                require_once PATH_MODEL . 'membres.php';
-
-                // Mise à jour de l'avatar dans la table
-                // maj_avatar_membre() est défini dans ~/models/membres.php
-                updateUserAvatar($idUser, $avatar_filename);
-            }
-
             // Affichage de la confirmation de l'inscription
             require_once PATH_VIEW . 'register_done.php';
 
-            /*// On vérifie qu'un hash est présent
-            if (!empty($_GET['hash'])) {
-
-                // On veut utiliser le modèle des membres (~/models/membres.php)
-                require_once PATH_MODEL . 'membres.php';
-
-                // valider_compte_avec_hash() est définit dans ~/models/membres.php
-                valider_compte_avec_hash($_GET['hash']);
-                if (valider_compte_avec_hash($_GET['hash'])) {
-
-                // Affichage de la confirmation de validation du compte
-                require_once PATH_VIEW . 'account_validate.php';
-
-            } else {
-
-                // Affichage de l'erreur de validation du compte
-                require_once PATH_VIEW . 'error_activation.php';
-            }*/
-
         } else {
+
+            //On affiche l'erreur renvoyé par PDO::errorinfo()
+            print_r($idUser[2]);
 
             // On affiche à nouveau le formulaire d'inscription
             require_once PATH_VIEW . 'form_signup.php';
-
-            //On affiche l'erreur renvoyé par PDO::errorinfo()
-            echo $idUser[2];
         }
     } else {
         if (!empty($_POST)) {
@@ -133,7 +89,6 @@ if (userSignedIn()) {
                 echo "* Need to fill email address" . "<br>";
             }
         }
-
     }
 
     // On reaffiche le formulaire d'inscription

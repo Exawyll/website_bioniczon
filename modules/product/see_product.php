@@ -2,11 +2,12 @@
 
 //The model for product is necessary
 require_once PATH_MODEL . 'product.php';
+$modelProduct = new Model_Products();
 
 if (!isset($_GET['id_product']) && !isset($_GET['id_category'])) {
 
     //We first get all the products available
-    $allProducts = getAllProducts();
+    $allProducts = $modelProduct->getAllProducts();
 
     //breadcrumb maker
     $name = 'Articles';
@@ -18,16 +19,14 @@ if (!isset($_GET['id_product']) && !isset($_GET['id_category'])) {
 
     //The model for product is necessary
     require_once PATH_MODEL . 'comments.php';
+    $modelComment = new Model_Comment();
 
     //Secure the variable
     $idProduct = intval($_GET['id_product']);
 
     //Get the product
-    $product = getProductById($idProduct);
-    $comments['comment'] = getCommentsByProduct($idProduct);
-
-    //breadcrumb maker
-//    $name = 'Articles > ' . $product['category'] . ' > ' . $product['name'];
+    $product = $modelProduct->getProductById($idProduct);
+    $comments['comment'] = $modelComment->getCommentsByProduct($idProduct);
 
     //Check if comments exist
     if (!empty($comments)) {
@@ -52,12 +51,11 @@ if (!isset($_GET['id_product']) && !isset($_GET['id_category'])) {
     $idCategory = intval($_GET['id_category']);
 
     //breadcrumb maker
-    $page = getCategories();
+    $page = $modelProduct->getCategories();
     $name = 'Articles > ' . $page[$idCategory - 1][1];
 
-    $allProducts = getProductByCategory($idCategory);
+    $allProducts = $modelProduct->getProductByCategory($idCategory);
 
     //And we display them
     require_once PATH_VIEW . 'all_products.php';
-
 }

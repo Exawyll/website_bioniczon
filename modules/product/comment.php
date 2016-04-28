@@ -2,7 +2,7 @@
 
 if (isset($_POST['rating']) && isset($_POST['comment']) && isset($_POST['author'])) {
 
-    //Sécure the posts
+    //Secure the posts
     $mark = htmlspecialchars($_POST['rating']);
     $comment = htmlspecialchars($_POST['comment']);
     $idProduct = intval($_GET['id_product']);
@@ -10,8 +10,9 @@ if (isset($_POST['rating']) && isset($_POST['comment']) && isset($_POST['author'
 
     //Add the model path
     require_once PATH_MODEL . 'comments.php';
+    $modelComment = new Model_Comment();
 
-    //$request = addComment($_SESSION['id'], $idProduct, $mark, $comment, $author);
+    //$request = $modelComment->addComment($_SESSION['id'], $idProduct, $mark, $comment, $author);
 
     //if (ctype_digit($request)) {
 

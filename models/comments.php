@@ -1,10 +1,34 @@
 <?php
 
-function addComment($idUser, $idProduct, $mark, $comment, $author)
+/**
+ * Class Model_Comment
+ */
+class Model_Comment
 {
-    $pdo = PDO2::getInstance();
+    /**
+     * @var PDO
+     */
+    private $db;
 
-    $query = $pdo->prepare("INSERT INTO comments SET
+    /**
+     * Model_Comment constructor.
+     */
+    public function __construct()
+    {
+        $this->db = PDO2::getInstance();
+    }
+
+    /**
+     * @param $idUser
+     * @param $idProduct
+     * @param $mark
+     * @param $comment
+     * @param $author
+     * @return array|string
+     */
+    function addComment($idUser, $idProduct, $mark, $comment, $author)
+    {
+        $query = $this->db->prepare("INSERT INTO comments SET
         id_user = :id_user,
         id_product = :id_product,
         review = :review,
@@ -12,33 +36,36 @@ function addComment($idUser, $idProduct, $mark, $comment, $author)
         author = :author,
         writtenDate = NOW()");
 
-    $query->execute(array(
-        ':id_user' => $idUser,
-        ':id_product' => $idProduct,
-        ':review' => $comment,
-        ':mark' => $mark,
-        ':author' => $author
-    ));
+        $query->execute(array(
+            ':id_user' => $idUser,
+            ':id_product' => $idProduct,
+            ':review' => $comment,
+            ':mark' => $mark,
+            ':author' => $author
+        ));
 
-    if ($query->execute()) {
+        if ($query->execute()) {
 
-        return $pdo->lastInsertId();
+            return $this->db->lastInsertId();
+        }
+        return $query->errorInfo();
     }
-    return $query->errorInfo();
-}
 
-function getCommentsByProduct($idProduct)
-{
-    $pdo = PDO2::getInstance();
+    /**
+     * @param $idProduct
+     * @return array|bool
+     */
+    function getCommentsByProduct($idProduct)
+    {
+        $query = $this->db->prepare("SELECT * FROM comments WHERE id_product = :id_product");
 
-    $query = $pdo->prepare("SELECT * FROM comments WHERE id_product = :id_product");
+        $query->bindValue(':id_product', $idProduct);
+        $query->execute();
 
-    $query->bindValue(':id_product', $idProduct);
-    $query->execute();
-
-    if ($result = $query->fetchAll()) {
-        $query->closeCursor();
-        return $result;
+        if ($result = $query->fetchAll()) {
+            $query->closeCursor();
+            return $result;
+        }
+        return false;
     }
-    return false;
 }
