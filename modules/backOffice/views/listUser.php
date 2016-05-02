@@ -35,16 +35,21 @@
                 <td>
                     <a href="index.php?module=backOffice&action=listUser&idUser=<?php echo $user['id']; ?>">
                         <button id="admin" type="submit">
-                            <?php if($user['admin']) {
+                            <?php if ($user['admin']) {
                                 echo 'admin';
                             } else {
                                 echo 'not admin';
                             }; ?>
                         </button>
                     </a>
-                        </form>
                 </td>
-                <td><a href="index.php?module=backOffice&action=listUser&function=remove&idUser=<?php echo $user['id'];  ?>"><img class="btn btn-danger" src="/ecommerce/images/delete.png" alt="bin" width="35%"></a></td>
+                <td>
+                    <a href="index.php?module=backOffice&action=listUser&idUser=<?php echo $user['id']; ?>&function=remove">
+                        <button class="btn btn-danger" id="delete" type="submit">
+                            <img src="/ecommerce/images/delete.png" alt="bin" width="50%">
+                        </button>
+                    </a>
+                </td>
             </tr>
         <?php } ?>
 

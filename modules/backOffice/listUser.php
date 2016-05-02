@@ -4,6 +4,7 @@ if (!adminUser()) {
 
     //Error page if not admin
     require_once PATH_GLOBAL_VIEW . 'error_not_admin.php';
+
 } else {
 
     //Model for membres
@@ -12,7 +13,9 @@ if (!adminUser()) {
 
     $users = $modelUser->getAllUsers();
 
-    if (!empty($_GET['idUser']) && empty($_GET['function'])) {
+    if (!empty($_GET['idUser']) && !isset($_GET['function'])) {
+
+        var_dump($_GET);
 
         $user = $modelUser->infoUser($_GET['idUser']);
 
@@ -33,14 +36,15 @@ if (!adminUser()) {
 
             echo 'You can\'t do that';
         }
-    } else if (isset($_GET['idUser']) && $_GET['function'] == 'remove') {
+    } else if (!empty($_GET['idUser']) && isset($_GET['function'])) {
 
         //Delete User
         $modelUser->deleteUser(intval($_GET['idUser']));
 
         //Display the list updated
         header('Location: index.php?module=backOffice&action=listUser');
-    } else {
+
+    } else if (empty($_GET['function']) && empty($_GET['idUser'])) {
 
         //Display the list aof users
         require_once PATH_VIEW . 'listUser.php';

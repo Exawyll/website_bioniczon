@@ -21,21 +21,14 @@
         };
     });
 
-    app.controller('ReviewController', /*['$http', */function (/*$http*/) {
-        this.comment = {};
-        console.log('prout');
-        //$http.get('./js/store-products.json').success(function(data){
-        //    review.comment = data["comment"];
-        //    console.log(data["comment"]);
-        //});
+    app.controller('ReviewController', function() {
+        this.review = {};
 
-        this.addComment = function (product) {
-            product.comment.push(this.comment);
+        this.addReview = function(product) {
+            product.comment.push(this.review);
 
-            console.log('prout');
-
-            product.comment = {};
+            this.review = {};
         };
-    }/*]*/);
+    });
 
 })();

@@ -14,9 +14,10 @@
     <link rel="stylesheet" href="style/product.css" type="text/css"/>
     <link rel="stylesheet" href="style/owlcarousel/assets/owl.carousel.css">
     <link rel="stylesheet" href="style/owlcarousel/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="style/home.css" type="text/css"/>
     <script type="text/javascript" src="js/angular.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
-    <!--    <link rel="stylesheet" href="style/accueil.css" type="text/css"/>-->
+
 
 </head>
 

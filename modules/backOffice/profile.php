@@ -32,14 +32,16 @@ if (empty($_SESSION['id']) || !is_numeric($_SESSION['id'])) {
             $email = htmlspecialchars($_POST['email']);
 
             //Update the DB
-            $user = $modelUser->updateUserInDB($firstname, $lastname, $login, sha1($password), $email);
-
-            var_dump($user);
+            $user = $modelUser->updateUserInDB($_SESSION['id'], $firstname, $lastname, $login, sha1($password), $email);
 
             if ($user !== true) {
                 echo '!!! ' . $user[2] . ' !!!';
+            } else {
+                echo "Your profile have been updated !";
             }
         }
+    } else {
+        echo "* Please, fill all the fields to update your profile !!!";
     }
 
     $user = $modelUser->infoUser($_SESSION['id']);

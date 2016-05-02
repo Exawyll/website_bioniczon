@@ -3,11 +3,13 @@
         <div class="col-lg-3 col-md-2 col-xs-0 "></div>
         <div class="owl-carousel col-lg-6 col-md-8 col-xs-12">
             <div><img src="images/carousel/robot.jpg" alt="robot" width="100%"></div>
-            <div><img src="images/carousel/drone-delivery.jpg" alt="robot" width="100%"></div>
+            <div><a href="http://www.amazon.com/b?node=8037720011" target="_blank"><img
+                        src="images/carousel/drone-delivery.jpg" alt="robot" width="100%"></a></div>
             <div><img src="images/carousel/future-sentient-robot.jpg" alt="robot" width="100%"></div>
             <div><img src="images/carousel/indian_robots.jpg" alt="robot" width="100%"></div>
-            <div><img src="images/carousel/Medical.jpg" alt="robot" width="100%"></div>
-            <div><img class="iframe" src="images/carousel/numbers.jpg" alt="robot" width="100%"></div>
+            <div><a href="http://robots.ihmc.us/" target="_blank"><img src="images/carousel/Medical.jpg" alt="robot"
+                                                                       width="100%"></a></div>
+            <div><img src="images/carousel/numbers.jpg" alt="robot" width="100%"></div>
         </div>
         <div class="col-lg-3 col-md-2 col-xs-0 "></div>
     </div>
@@ -37,17 +39,18 @@
         </div>
 
         <div class="col-lg-6 col-md-3 col-xs-12 accueil__second">
-            <iframe class="iframe" width="400" height="295" src="https://www.youtube.com/embed/W0_DPi0PmF0?autoplay=1"></iframe>
+            <iframe class="iframe" width="400" height="295"
+                    src="https://www.youtube.com/embed/W0_DPi0PmF0?autoplay=1"></iframe>
         </div>
 
-        <div class="col-lg-3 col-md-12 col-xs-12 accueil__third">
+        <div class="col-lg-2 col-md-12 col-xs-12 accueil__third">
             <div class="accueil__third--title">
                 <h3>Last added article...</h3>
             </div>
 
-            <div class="accueil__third--img">
-
-            </div>
+            <a href="index.php?module=product&action=see_product&id_product=23">
+                <div class="accueil__third--img"></div>
+            </a>
 
             <!--            <img src = "images/leg4.jpg" alt = "robot" width = "60%" >-->
         </div>

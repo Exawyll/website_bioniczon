@@ -1,6 +1,6 @@
 <h2>Signing In</h2>
 
-<p>If you are not registered, please do it <a href="index.php?module=membres&amp;action=inscription">here</a>.</p>
+<p>If you are not registered, please do it <a href="index.php?module=membres&amp;action=register">here</a>.</p>
 
 <?php
 

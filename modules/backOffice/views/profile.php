@@ -132,17 +132,17 @@
                                         <th>Date Delivery</th>
                                     </tr>
                                     </thead>
-                                    <tr>
-                                        <?php foreach ($userOrder as $order) { ?>
 
+                                    <?php foreach ($userOrder as $order) { ?>
+                                        <tr>
                                             <td><?php echo $order['dateOrder']; ?></td>
                                             <td><?php echo $order['nameProduct']; ?></td>
                                             <td><?php echo round($order['price'], 2); ?></td>
                                             <td><?php echo $order['quantity']; ?></td>
                                             <td><?php echo $order['dateDelivery']; ?></td>
+                                        </tr>
+                                    <?php } ?>
 
-                                        <?php } ?>
-                                    </tr>
                                 </table>
 
                             <?php } else { ?>

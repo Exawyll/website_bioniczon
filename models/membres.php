@@ -55,9 +55,10 @@ class Model_Users
      * @param $email
      * @return string
      */
-    function updateUserInDB($firstname, $lastname, $login, $mdp, $email)
+    function updateUserInDB($id, $firstname, $lastname, $login, $mdp, $email)
     {
         $query = $this->db->prepare("REPLACE INTO user SET
+        id = :id,
 		firstname = :firstname,
 		lastname = :lastname,
 		login = :login,
@@ -65,6 +66,7 @@ class Model_Users
 		email = :email,
 		registerDate = NOW()");
 
+        $query->bindValue(':id', $id);
         $query->bindValue(':firstname', $firstname);
         $query->bindValue(':lastname', $lastname);
         $query->bindValue(':login', $login);
@@ -168,21 +170,25 @@ class Model_Users
      */
     function deleteUser($idUser)
     {
-        $query = $this->db->prepare("DELETE FROM address WHERE id_user=:id");
-        $query->bindValue(':id', $idUser);
-        $query->execute();
-
-        $query = $this->db->prepare("DELETE FROM comments WHERE id_user=:id");
-        $query->bindValue(':id', $idUser);
-        $query->execute();
-
-        $query = $this->db->prepare("DELETE FROM orders WHERE id_user=:id");
-        $query->bindValue(':id', $idUser);
-        $query->execute();
+//        var_dump('yop');
+//        $query = $this->db->prepare("DELETE FROM address WHERE id_user=:id");
+//        $query->bindValue(':id', $idUser);
+//        var_dump($query->execute());
+//
+//        $query = $this->db->prepare("DELETE FROM comments WHERE id_user=:id");
+//        $query->bindValue(':id', $idUser);
+//        var_dump($query->execute());
+//
+        $query = $this->db->prepare(" ALTER TABLE `ecommerce`.`orders` DROP FOREIGN KEY FK_order_id_user");
+        var_dump($query->execute());
 
         $query = $this->db->prepare("DELETE FROM user WHERE id=:id");
         $query->bindValue(':id', $idUser);
 
-        return $query->execute();
+        if ($query->execute()) {
+            return true;
+        } else {
+            return $query->errorInfo();
+        }
     }
 }
