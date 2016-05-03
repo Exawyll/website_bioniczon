@@ -57,9 +57,16 @@
                         <tr>
                             <td><?php echo $myarticle['id']; ?></td>
                             <td><?php echo $myarticle['name']; ?></td>
-                            <td><?php echo $myarticle['quantity']; ?></td>
+                            <td>
+                                <a href="index.php?module=backOffice&action=add_product&id_product=<?php echo $myarticle['id']; ?>&function=decrease"><button>-</button></a>
+                                <?php echo $myarticle['quantity']; ?>
+                                <a href="index.php?module=backOffice&action=add_product&id_product=<?php echo $myarticle['id']; ?>&function=increase"><button>+</button></a>
+
+                            </td>
                             <td><?php echo $cat[($myarticle['id_category'] - 1)][1]; ?></td>
-                            <td><a href="index.php?module=backOffice&action="><img class="btn btn-danger" src="/ecommerce/images/delete.png" alt="bin" width="35%"></a></td>
+                            <td><a href="index.php?module=backOffice&action="><img class="btn btn-danger"
+                                                                                   src="/ecommerce/images/delete.png"
+                                                                                   alt="bin" width="35%"></a></td>
                         </tr>
                     <?php } ?>
                 </table>

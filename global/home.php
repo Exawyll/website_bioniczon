@@ -52,7 +52,6 @@
                 <div class="accueil__third--img"></div>
             </a>
 
-            <!--            <img src = "images/leg4.jpg" alt = "robot" width = "60%" >-->
         </div>
     </div>
 </div>

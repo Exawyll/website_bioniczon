@@ -15,8 +15,6 @@ if (!adminUser()) {
 
     if (!empty($_GET['idUser']) && !isset($_GET['function'])) {
 
-        var_dump($_GET);
-
         $user = $modelUser->infoUser($_GET['idUser']);
 
         if ($user['admin'] == 1) {
@@ -39,7 +37,7 @@ if (!adminUser()) {
     } else if (!empty($_GET['idUser']) && isset($_GET['function'])) {
 
         //Delete User
-        $modelUser->deleteUser(intval($_GET['idUser']));
+        $result = $modelUser->deleteUser(intval($_GET['idUser']));
 
         //Display the list updated
         header('Location: index.php?module=backOffice&action=listUser');

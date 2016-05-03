@@ -1,13 +1,14 @@
 <?php
 
-// On veut utiliser le modele des membres (~/models/membres.php)
+// Call the membres model
 require_once PATH_MODEL . 'membres.php';
 $modelUser = new Model_Users();
 
-// On veut utiliser le modele des membres (~/models/membres.php)
+// Call the address model
 require_once PATH_MODEL . 'address.php';
 $modelAddress = new Model_Address();
 
+// Call the orders model
 require_once PATH_MODEL . 'order.php';
 $modelOrder = new Model_Order();
 
@@ -48,7 +49,7 @@ if (empty($_SESSION['id']) || !is_numeric($_SESSION['id'])) {
     $userAddress = $modelAddress->getAddressByUser($_SESSION['id']);
     $userOrder = $modelOrder->getOrderByUser($_SESSION['id']);
 
-//Go to display the profile page
+// Display the profile page
     require_once PATH_VIEW . 'profile.php';
 
 }

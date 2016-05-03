@@ -36,7 +36,7 @@ class Model_Comment
         author = :author,
         writtenDate = NOW()");
 
-        $query->execute(array(
+        $result = $query->execute(array(
             ':id_user' => $idUser,
             ':id_product' => $idProduct,
             ':review' => $comment,
@@ -44,7 +44,7 @@ class Model_Comment
             ':author' => $author
         ));
 
-        if ($query->execute()) {
+        if ($result) {
 
             return $this->db->lastInsertId();
         }

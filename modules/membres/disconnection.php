@@ -1,17 +1,18 @@
 <?php
 
-// Vérification des droits d'accès de la page
+// Check access to the page
 if (!userSignedIn()) {
 
-    // On affiche la page d'erreur comme quoi l'utilisateur doit être connecté pour voir la page
+    // Error if not connected
     include PATH_GLOBAL_VIEW . 'error_not_connected.php';
 
 } else {
 
-// Suppression de toutes les variables et destruction de la session
+// Destroy all the SESSION variables
     $_SESSION = array();
     session_destroy();
 
+    // Display logout confirmed
     include PATH_VIEW . 'disconnection_ok.php';
 
 }

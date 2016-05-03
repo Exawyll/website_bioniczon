@@ -1,17 +1,17 @@
 <?php
 
-//Vérification des droits d'accès de la page
+//Check access to the page
 if (userSignedIn()) {
 
-// On affiche la page d'erreur comme quoi l'utilisateur est déjà connecté
+// Error page to say the user is already connected
     include PATH_GLOBAL_VIEW . 'error_already_connected.php';
 
 } else {
 
-    // Ne pas oublier d'inclure la librairie Form
+    // Include the Form library
     require_once PATH_LIB . 'form.php';
 
-    // "formulaire_inscription" est l'ID unique du formulaire
+    // "$formSignUp" is the id of the form
     $formSignUp = new Form('register_form');
 
     $formSignUp->method('POST');
@@ -37,46 +37,51 @@ if (userSignedIn()) {
     $formSignUp->add('Submit', 'submit')
         ->value("Register");
 
-    // Pré-remplissage avec les valeurs précédemment entrées (s'il y en a)
+    // Previous entries (if exist)
     $formSignUp->bound($_POST);
 
-    // Affichage du formulaire
+    // form display
     require_once PATH_VIEW . 'form_signup.php';
 
-    // Validation des champs suivant les règles en utilisant les données du tableau $_POST
+    // Method to validate the form from the POSTS
     if ($formSignUp->is_valid($_POST)) {
 
-        // On vérifie si les 2 mots de passe correspondent
+        // Check identical passwords
         if ($_POST['password'] != $_POST['pass_check']) {
 
+            // Display Error
             echo "The two passwords are not the same !" . "<br>";
-        }
-
-        // Tentative d'ajout du membre dans la base de donnees
-        list($firstname, $lastname, $login, $password, $email) =
-            $formSignUp->get_cleaned_data('firstname', 'lastname', 'login', 'password', 'email');
-
-        // On veut utiliser le modele de l'inscription (~/models/register.php)
-        require_once PATH_MODEL . 'membres.php';
-        $modelUser = new Model_Users();
-
-        // ajouter_membre_dans_bdd() est défini dans ~/models/register.php
-        $idUser = $modelUser->addUserInDB($firstname, $lastname, $login, sha1($password), $email);
-
-        // Si la base de données a bien voulu ajouter l'utilisateur (pas de doublons)
-        if (ctype_digit($idUser)) {
-
-            // Affichage de la confirmation de l'inscription
-            require_once PATH_VIEW . 'register_done.php';
 
         } else {
 
-            //On affiche l'erreur renvoyé par PDO::errorinfo()
-            print_r($idUser[2]);
+            // Make the data clean before adding to the DB
+            list($firstname, $lastname, $login, $password, $email) =
+                $formSignUp->get_cleaned_data('firstname', 'lastname', 'login', 'password', 'email');
 
-            // On affiche à nouveau le formulaire d'inscription
-            require_once PATH_VIEW . 'form_signup.php';
+            // sign up model
+            require_once PATH_MODEL . 'membres.php';
+            $modelUser = new Model_Users();
+
+            // Add user in the DB
+            $idUser = $modelUser->addUserInDB($firstname, $lastname, $login, sha1($password), $email);
+
+            // Check if DB inserted the user
+            if (ctype_digit($idUser)) {
+
+                // To confirm the signed up
+                require_once PATH_VIEW . 'register_done.php';
+
+            } else {
+
+                //Display error from PDO::errorinfo()
+                print_r($idUser[2]);
+
+                // Display again the form to sign up
+                require_once PATH_VIEW . 'form_signup.php';
+            }
         }
+
+
     } else {
         if (!empty($_POST)) {
             if (empty($_POST['login'])) {
@@ -91,6 +96,6 @@ if (userSignedIn()) {
         }
     }
 
-    // On reaffiche le formulaire d'inscription
+    // Form to sign up once again
     require_once PATH_VIEW . 'form_signup.php';
 }

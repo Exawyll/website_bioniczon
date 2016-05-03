@@ -1,4 +1,4 @@
-<h1>Before ordering on our website...</h1>
+<h1>Before that on BionicZon...</h1>
 
 <hr>
 

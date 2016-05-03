@@ -1,6 +1,5 @@
 * {
     font-family: Calibri;
-    /*margin: 0 auto;*/
 }
 
 a {
@@ -23,19 +22,10 @@ h2, h3, h4, h5, h6 {
     margin-bottom: 0.5em;
 }
 
-#menu {
-    /*float: left;*/
-    /*width: 15%;*/
-    margin: 13em 0em;
-    padding: 1em;
-    background-color: #60f498;
-}
-
 #centre {
     background-color: #eeeeee;
     margin: 13em 0em;
     padding: 1em;
-
 }
 
 #bas {

@@ -6,16 +6,6 @@
     margin-left: 10px;
 }
 
-/*.accueil__third {*/
-    /*margin-left: -60px;*/
-/*}*/
-
-/*.accueil__third--title {*/
-    /*!*text-align: center;*!*/
-    /*height: 25px;*/
-    /*margin-left: -25px;*/
-/*}*/
-
 .accueil__third--img {
     background: url("../images/leg4.jpg") no-repeat;
     background-size: contain;

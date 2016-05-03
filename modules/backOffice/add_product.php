@@ -1,14 +1,14 @@
 <?php
 
-//Vérification des droits d'accès de la page
+// Check if user is admin
 if (!adminUser()) {
 
-// On affiche la page d'erreur comme quoi l'utilisateur est déjà connecté
+// Error already connected
     include PATH_GLOBAL_VIEW . 'error_not_connected.php';
 
 } else {
 
-//On appel le model pour les produits
+// Cal the products model
     require_once PATH_MODEL . 'product.php';
     $modelProduct = new Model_Products();
 
@@ -17,9 +17,6 @@ if (!adminUser()) {
 
 //Get all the current products
     $allProducts = $modelProduct->getAllProducts();
-
-//Load the form to add product
-    require_once PATH_VIEW . 'add_product.php';
 
     if (!empty($_POST['price']) && !empty($_POST['product_name']) && !empty($_POST['quantity']) && !empty($_POST['category']) && !empty($_POST['picture']) && !empty($_POST['description'])) {
 
@@ -71,9 +68,43 @@ if (!adminUser()) {
                 print_r($newProduct[2]);
             }
         }
+
+    } elseif (isset($_GET['function']) && isset($_GET['id_product'])) {
+
+        // Get the concerned product from the DB
+        $product = $modelProduct->getProductById($_GET['id_product']);
+
+        if ($_GET['function'] == 'increase') {
+
+            // increase the quantity
+            $product['quantity']++;
+
+            // Update the quantity in the DB
+            $modelProduct->updateQuantity($product['id'], $product['quantity']);
+
+        } elseif ($_GET['function'] == 'decrease') {
+
+            if ($product['quantity'] > 0) {
+
+                // decrease the quantity
+                $product['quantity']--;
+            }
+
+            // Update the quantity in the DB
+            $modelProduct->updateQuantity($product['id'], $product['quantity']);
+
+        }
+
+        //Update the page
+        header('Location: index.php?module=backOffice&action=add_product');
     } else {
+
+        //Load the form to add product
+        require_once PATH_VIEW . 'add_product.php';
+
         if (!empty($_POST)) {
             echo 'Please, fill all the fields !';
         }
     }
+
 }

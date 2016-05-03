@@ -21,8 +21,24 @@ if (!isset($_GET['id_product']) && !isset($_GET['id_category'])) {
     require_once PATH_MODEL . 'comments.php';
     $modelComment = new Model_Comment();
 
-    //Secure the variable
     $idProduct = intval($_GET['id_product']);
+
+    if (isset($_POST['rating']) && isset($_POST['comment']) && isset($_POST['author'])) {
+
+        if (!empty($_SESSION['id'])) {
+
+            //Secure the posts
+            $mark = htmlspecialchars($_POST['rating']);
+            $comment = htmlspecialchars($_POST['comment']);
+            $author = htmlspecialchars($_POST['author']);
+
+            $request = $modelComment->addComment($_SESSION['id'], $idProduct, $mark, $comment, $author);
+        } else {
+
+            //Bring the error not connected
+            require_once PATH_GLOBAL_VIEW . 'error_toBuy.php';
+        }
+    }
 
     //Get the product
     $product = $modelProduct->getProductById($idProduct);

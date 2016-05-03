@@ -6,7 +6,7 @@ $modelAddress = new Model_Address();
 
 if (!userSignedIn()) {
 
-    // On affiche la page d'erreur comme quoi l'utilisateur doit être connecté pour voir la page
+    // Must be connected to buy
     require_once PATH_GLOBAL_VIEW . 'error_toBuy.php';
 
 } else {
@@ -14,10 +14,10 @@ if (!userSignedIn()) {
 
         $userAddress = $modelAddress->getAddressByUser(intval($_SESSION['id']));
 
-        // Ne pas oublier d'inclure la librairie Form
+        // Form library
         require_once PATH_LIB . 'form.php';
 
-        // "formulaire_inscription" est l'ID unique du formulaire
+        // "form address"
         $formAddress = new Form('address_form');
 
         $formAddress->method('POST');
@@ -52,19 +52,18 @@ if (!userSignedIn()) {
 
             $idUser = $_SESSION['id'];
 
-            var_dump($idUser);
-
             //List the data before insertion in the DB
             list($city, $number, $postalCode, $streetName, $firstName, $lastName) =
                 $formAddress->get_cleaned_data('city', 'number', 'zipcode', 'street', 'firstname', 'lastname');
 
             //Call the function to insert a new address
             $newAddress = $modelAddress->addUserAddress(intval($idUser), $city, intval($number), intval($postalCode), $streetName, $firstName, $lastName);
-            var_dump($newAddress);
+
             if (ctype_digit($newAddress)) {
 
                 //display again the addresses view updated with the new address
                 header('Location: index.php?module=cart&action=orderTunnel&function=address');
+
             } else {
                 echo "error, the address can't be added !";
             }

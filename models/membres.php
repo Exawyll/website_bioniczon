@@ -179,8 +179,14 @@ class Model_Users
 //        $query->bindValue(':id', $idUser);
 //        var_dump($query->execute());
 //
+        $query = $this->db->prepare(" ALTER TABLE `ecommerce`.`address` DROP FOREIGN KEY FK_address_id_user");
+        $query->execute();
+
+        $query = $this->db->prepare(" ALTER TABLE `ecommerce`.`comments` DROP FOREIGN KEY FK_comments_id_user");
+        $query->execute();
+
         $query = $this->db->prepare(" ALTER TABLE `ecommerce`.`orders` DROP FOREIGN KEY FK_order_id_user");
-        var_dump($query->execute());
+        $query->execute();
 
         $query = $this->db->prepare("DELETE FROM user WHERE id=:id");
         $query->bindValue(':id', $idUser);

@@ -35,7 +35,7 @@
 
                                 <div class="header__nav--link1 col-lg-6" style="text-align: left">
                                     <ul class="menu">
-                                        <li><a href="index.php">Home</a> |</li>
+                                        <li><a href="index.php"><img src="images/home.png" alt="home" title="home"></a> |</li>
 
                                         <li><a href="index.php?module=product&amp;action=see_product">Articles</a>
                                             <ul class="menu submenu">
@@ -101,21 +101,6 @@
 
                 </header>
             </div>
-
-            <!--            <div class="container-fluid">
-                <div class="row">
-
-                    <?php /*if (isset($_GET['module']) && isset($_GET['action']) && $_GET['module'] == 'backOffice') { */ ?>
-
-                        <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
-
-                            <?php /*require_once 'global/menu.php'; */ ?>
-
-                        </div>
-
-                        <div class="col-lg-9 col-md-8 col-sm-12 col-xs-12">
-
-                            --><?php /*} */ ?>
 
             <main id="centre" class="robot">
 
